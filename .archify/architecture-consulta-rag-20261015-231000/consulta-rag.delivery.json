@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "9fa046f9-c3a4-4f04-bcf3-45d918ad4287",
+  "status": "current",
+  "command": "deliver",
+  "type": "architecture",
+  "input": "/Users/grs/Documents/repos/aunar/ia-que-escucha/.archify/architecture-consulta-rag-20261015-231000/candidate.json",
+  "output": "/Users/grs/Documents/repos/aunar/ia-que-escucha/.archify/architecture-consulta-rag-20261015-231000/consulta-rag.html",
+  "specification": {
+    "sha256": "0b581f8323d3f990efe2a836e3cfa70a9c65f5f7b41568a949f8e60864e79504",
+    "bytes": 4972
+  },
+  "artifact": {
+    "sha256": "0b5832394fc9379198e881f8e3413debd3e5c5a1a84429e1586fa20251d0147d",
+    "bytes": 824476
+  }
+}

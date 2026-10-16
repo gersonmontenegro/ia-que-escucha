@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "7e345f80-0078-418b-ba0c-7d3fc7c246d7",
+  "status": "current",
+  "command": "deliver",
+  "type": "architecture",
+  "input": "/Users/grs/Documents/repos/aunar/ia-que-escucha/.archify/architecture-ingesta-video-20261015-224000/candidate.json",
+  "output": "/Users/grs/Documents/repos/aunar/ia-que-escucha/.archify/architecture-ingesta-video-20261015-224000/ingesta-video.html",
+  "specification": {
+    "sha256": "9fa0f5b99cda29016d6ade34e88dba82d02cd0ead949bc815af8cfa0d7404f34",
+    "bytes": 5011
+  },
+  "artifact": {
+    "sha256": "3fc10d60a879ff19726008a9b3ec239dffc780ecc76aa9dd7c5cb8e430e12ee3",
+    "bytes": 830154
+  }
+}

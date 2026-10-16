@@ -1,0 +1,154 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "architecture",
+  "quality": "showcase",
+  "specification": {
+    "path": "/Users/grs/Documents/repos/aunar/ia-que-escucha/.archify/architecture-rag-conferencia-20261013-223433/candidate.json",
+    "sha256": "9873bb87543bf8d1d2d1c784e9cf136a16ae0f9c099eca6c3fb9120321fde05c",
+    "bytes": 4306
+  },
+  "artifact": {
+    "path": "/Users/grs/Documents/repos/aunar/ia-que-escucha/.archify/architecture-rag-conferencia-20261013-223433/arquitectura-rag.html",
+    "sha256": "ff88e5fc03e1e8444088faa7d41c1cfd5a4bab63447014b138018d7b33e9dca8",
+    "bytes": 831911
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/Users/grs/Documents/repos/aunar/ia-que-escucha/.archify/architecture-rag-conferencia-20261013-223433/review-4/arquitectura-rag.finalize.json",
+    "summaryReceipt": "/Users/grs/Documents/repos/aunar/ia-que-escucha/.archify/architecture-rag-conferencia-20261013-223433/review-4/arquitectura-rag.finalize-summary.json",
+    "browserCheckReceipt": "/Users/grs/Documents/repos/aunar/ia-que-escucha/.archify/architecture-rag-conferencia-20261013-223433/review-4/arquitectura-rag.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.1.0",
+    "availableVersion": "3.1.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-10-14T03:43:34.707Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 6684,
+  "visualReviewRecommendation": {
+    "action": "inspect-route-readability",
+    "signals": {
+      "resolvedCrossovers": 2,
+      "routesOverSuggestedBends": 2
+    },
+    "reason": "Automated gates passed, but crossings or detours still need perceptual review before claiming visual quality.",
+    "affectedRoutes": {
+      "crossings": [
+        {
+          "left": {
+            "id": "rag-qdrant",
+            "from": "rag",
+            "to": "qdrant",
+            "label": "upsert / top-k",
+            "collectionIndex": 10,
+            "artifactIndex": 11
+          },
+          "right": {
+            "id": "ollama-rag",
+            "from": "ollama",
+            "to": "rag",
+            "label": "respuesta en streaming",
+            "collectionIndex": 13,
+            "artifactIndex": 14
+          },
+          "point": [
+            673.5,
+            370
+          ],
+          "sharedNode": "rag"
+        },
+        {
+          "left": {
+            "id": "rag-ollama",
+            "from": "rag",
+            "to": "ollama",
+            "label": "prompt + Qwen",
+            "collectionIndex": 12,
+            "artifactIndex": 13
+          },
+          "right": {
+            "id": "ollama-rag",
+            "from": "ollama",
+            "to": "rag",
+            "label": "respuesta en streaming",
+            "collectionIndex": 13,
+            "artifactIndex": 14
+          },
+          "point": [
+            1021,
+            386
+          ],
+          "sharedNode": "rag"
+        }
+      ],
+      "detours": [
+        {
+          "relationship": {
+            "id": "qdrant-rag",
+            "from": "qdrant",
+            "to": "rag",
+            "label": "fragmentos + tiempos",
+            "collectionIndex": 11,
+            "artifactIndex": 12
+          },
+          "bends": 3,
+          "stretch": 1
+        },
+        {
+          "relationship": {
+            "id": "rag-ollama",
+            "from": "rag",
+            "to": "ollama",
+            "label": "prompt + Qwen",
+            "collectionIndex": 12,
+            "artifactIndex": 13
+          },
+          "bends": 3,
+          "stretch": 1
+        }
+      ],
+      "truncated": false
+    },
+    "hints": [
+      "rag → qdrant and ollama → rag cross next to rag: move node qdrant or ollama so the two reach rag from different sides (for example one level with it, one directly above or below it).",
+      "rag → ollama and ollama → rag cross next to rag: move node ollama or ollama so the two reach rag from different sides (for example one level with it, one directly above or below it).",
+      "qdrant → rag needs 3 bends: move node qdrant or rag so they share a row or column with matching centers, or sit diagonally with a clear corner.",
+      "rag → ollama needs 3 bends: move node rag or ollama so they share a row or column with matching centers, or sit diagonally with a clear corner."
+    ],
+    "repair": "Trace these relationships at the desktop viewport. For Architecture, use references/architecture-layout-repair.md: reflow a blocked main path or tangled connected scene, and repair an isolated defect locally only when the surrounding composition is accepted. Preserve all semantic content and user-fixed geometry. Rerun finalize once after the edit."
+  },
+  "layoutReviewRecommendation": {
+    "action": "inspect-leading-space",
+    "evidence": {
+      "measured": true,
+      "emptyTopPx": 180,
+      "emptyTopRatio": 0.288,
+      "occupiedTop": 180,
+      "viewBoxTop": 0,
+      "canvasHeight": 626,
+      "typicalNodeHeight": 78,
+      "reviewSuggested": true
+    },
+    "reason": "Measured content, including routes and labels, leaves a large empty area above the diagram. This is a composition suggestion, not a failed gate.",
+    "repair": "Check whether that leading space is intentional. If not, reposition the connected scene nearer the canvas origin while retaining room for its actual boundaries, labels and return routes. Preserve all meaning and user-fixed geometry, then rerun finalize. No screenshot is required."
+  }
+}

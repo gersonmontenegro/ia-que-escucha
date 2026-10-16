@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "architecture",
+  "quality": "showcase",
+  "specification": {
+    "path": "/Users/grs/Documents/repos/aunar/ia-que-escucha/.archify/architecture-consulta-rag-20261015-231000/candidate.json",
+    "sha256": "0b581f8323d3f990efe2a836e3cfa70a9c65f5f7b41568a949f8e60864e79504",
+    "bytes": 4972
+  },
+  "artifact": {
+    "path": "/Users/grs/Documents/repos/aunar/ia-que-escucha/.archify/architecture-consulta-rag-20261015-231000/consulta-rag.html",
+    "sha256": "0b5832394fc9379198e881f8e3413debd3e5c5a1a84429e1586fa20251d0147d",
+    "bytes": 824476
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/Users/grs/Documents/repos/aunar/ia-que-escucha/.archify/architecture-consulta-rag-20261015-231000/consulta-rag.finalize.json",
+    "summaryReceipt": "/Users/grs/Documents/repos/aunar/ia-que-escucha/.archify/architecture-consulta-rag-20261015-231000/consulta-rag.finalize-summary.json",
+    "browserCheckReceipt": "/Users/grs/Documents/repos/aunar/ia-que-escucha/.archify/architecture-consulta-rag-20261015-231000/consulta-rag.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.1.0",
+    "availableVersion": "3.1.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-10-16T03:55:15.663Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 1822,
+  "visualReviewRecommendation": {
+    "action": "inspect-route-readability",
+    "signals": {
+      "routesOverSuggestedBends": 1
+    },
+    "reason": "Automated gates passed, but crossings or detours still need perceptual review before claiming visual quality.",
+    "affectedRoutes": {
+      "crossings": [],
+      "detours": [
+        {
+          "relationship": {
+            "id": "no-rag-bypass",
+            "from": "gradio_question",
+            "to": "message_builder",
+            "label": "",
+            "collectionIndex": 7,
+            "artifactIndex": 8
+          },
+          "bends": 3,
+          "stretch": 1
+        }
+      ],
+      "truncated": false
+    },
+    "hints": [
+      "gradio_question → message_builder needs 3 bends: move node gradio_question or message_builder so they share a row or column with matching centers, or sit diagonally with a clear corner."
+    ],
+    "repair": "Trace these relationships at the desktop viewport. For Architecture, use references/architecture-layout-repair.md: reflow a blocked main path or tangled connected scene, and repair an isolated defect locally only when the surrounding composition is accepted. Preserve all semantic content and user-fixed geometry. Rerun finalize once after the edit."
+  },
+  "layoutReviewRecommendation": {
+    "action": "inspect-leading-space",
+    "evidence": {
+      "measured": true,
+      "emptyTopPx": 185,
+      "emptyTopRatio": 0.333,
+      "occupiedTop": 185,
+      "viewBoxTop": 0,
+      "canvasHeight": 555,
+      "typicalNodeHeight": 82,
+      "reviewSuggested": true
+    },
+    "reason": "Measured content, including routes and labels, leaves a large empty area above the diagram. This is a composition suggestion, not a failed gate.",
+    "repair": "Check whether that leading space is intentional. If not, reposition the connected scene nearer the canvas origin while retaining room for its actual boundaries, labels and return routes. Preserve all meaning and user-fixed geometry, then rerun finalize. No screenshot is required."
+  }
+}

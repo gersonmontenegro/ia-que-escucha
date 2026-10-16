@@ -1,0 +1,102 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "architecture",
+  "quality": "showcase",
+  "specification": {
+    "path": "/Users/grs/Documents/repos/aunar/ia-que-escucha/.archify/architecture-ingesta-video-20261015-224000/candidate.json",
+    "sha256": "9fa0f5b99cda29016d6ade34e88dba82d02cd0ead949bc815af8cfa0d7404f34",
+    "bytes": 5011
+  },
+  "artifact": {
+    "path": "/Users/grs/Documents/repos/aunar/ia-que-escucha/.archify/architecture-ingesta-video-20261015-224000/ingesta-video.html",
+    "sha256": "3fc10d60a879ff19726008a9b3ec239dffc780ecc76aa9dd7c5cb8e430e12ee3",
+    "bytes": 830154
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/Users/grs/Documents/repos/aunar/ia-que-escucha/.archify/architecture-ingesta-video-20261015-224000/ingesta-video.finalize.json",
+    "summaryReceipt": "/Users/grs/Documents/repos/aunar/ia-que-escucha/.archify/architecture-ingesta-video-20261015-224000/ingesta-video.finalize-summary.json",
+    "browserCheckReceipt": "/Users/grs/Documents/repos/aunar/ia-que-escucha/.archify/architecture-ingesta-video-20261015-224000/ingesta-video.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.1.0",
+    "availableVersion": "3.1.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-10-16T03:55:15.663Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 6818,
+  "visualReviewRecommendation": {
+    "action": "inspect-route-readability",
+    "signals": {
+      "resolvedCrossovers": 1,
+      "routesOverSuggestedBends": 1
+    },
+    "reason": "Automated gates passed, but crossings or detours still need perceptual review before claiming visual quality.",
+    "affectedRoutes": {
+      "crossings": [
+        {
+          "left": {
+            "id": "lookup-cache",
+            "from": "pipeline",
+            "to": "transcript_cache",
+            "label": "leer salvo force",
+            "collectionIndex": 2,
+            "artifactIndex": 3
+          },
+          "right": {
+            "id": "write-cache",
+            "from": "transcribe",
+            "to": "transcript_cache",
+            "label": "guardar JSON",
+            "collectionIndex": 6,
+            "artifactIndex": 7
+          },
+          "point": [
+            534,
+            169.99999999999997
+          ],
+          "sharedNode": "transcript_cache"
+        }
+      ],
+      "detours": [
+        {
+          "relationship": {
+            "id": "lookup-cache",
+            "from": "pipeline",
+            "to": "transcript_cache",
+            "label": "leer salvo force",
+            "collectionIndex": 2,
+            "artifactIndex": 3
+          },
+          "bends": 3,
+          "stretch": 1.189
+        }
+      ],
+      "truncated": false
+    },
+    "hints": [
+      "pipeline → transcript_cache and transcribe → transcript_cache cross next to transcript_cache: move node pipeline or transcribe so the two reach transcript_cache from different sides (for example one level with it, one directly above or below it).",
+      "pipeline → transcript_cache needs 3 bends: move node pipeline or transcript_cache so they share a row or column with matching centers, or sit diagonally with a clear corner."
+    ],
+    "repair": "Trace these relationships at the desktop viewport. For Architecture, use references/architecture-layout-repair.md: reflow a blocked main path or tangled connected scene, and repair an isolated defect locally only when the surrounding composition is accepted. Preserve all semantic content and user-fixed geometry. Rerun finalize once after the edit."
+  }
+}

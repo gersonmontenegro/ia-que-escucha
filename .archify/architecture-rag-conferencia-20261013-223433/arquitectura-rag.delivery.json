@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "abcab2f8-b8d4-4489-8bb9-85c5f408226e",
+  "status": "current",
+  "command": "deliver",
+  "type": "architecture",
+  "input": "/Users/grs/Documents/repos/aunar/ia-que-escucha/.archify/architecture-rag-conferencia-20261013-223433/candidate.json",
+  "output": "/Users/grs/Documents/repos/aunar/ia-que-escucha/.archify/architecture-rag-conferencia-20261013-223433/arquitectura-rag.html",
+  "specification": {
+    "sha256": "9873bb87543bf8d1d2d1c784e9cf136a16ae0f9c099eca6c3fb9120321fde05c",
+    "bytes": 4306
+  },
+  "artifact": {
+    "sha256": "ff88e5fc03e1e8444088faa7d41c1cfd5a4bab63447014b138018d7b33e9dca8",
+    "bytes": 831911
+  }
+}

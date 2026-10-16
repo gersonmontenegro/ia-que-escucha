@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "27cde87b-ad28-466a-9202-11f8efc3666c",
+  "status": "current",
+  "command": "deliver",
+  "type": "architecture",
+  "input": "/Users/grs/Documents/repos/aunar/ia-que-escucha/.archify/architecture-cita-reproduccion-20261015-231500/candidate.json",
+  "output": "/Users/grs/Documents/repos/aunar/ia-que-escucha/.archify/architecture-cita-reproduccion-20261015-231500/cita-reproduccion.html",
+  "specification": {
+    "sha256": "39eb80618a21ebb00153165196c1fc45c59e45b3cc7271cfba18d4beff1cc353",
+    "bytes": 3616
+  },
+  "artifact": {
+    "sha256": "c462bc9761dca8a0ee20a6852b3288e008709d20fabdf7fde5b7c7a6e9a28437",
+    "bytes": 818421
+  }
+}

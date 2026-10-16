@@ -1,0 +1,113 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Ingesta de video: del archivo a Qdrant",
+    "locale": "es",
+    "output": ".archify/architecture-ingesta-video-20261015-224000/ingesta-video.html",
+    "quality_profile": "showcase"
+  },
+  "components": [
+    {
+      "id": "gradio",
+      "type": "frontend",
+      "label": "Gradio · Ingesta",
+      "sublabel": "selecciona video y opción de caché",
+      "pos": [40, 235],
+      "size": [170, 76]
+    },
+    {
+      "id": "videos",
+      "type": "database",
+      "label": "data/videos/",
+      "sublabel": "lista de videos admitidos",
+      "pos": [40, 105],
+      "size": [170, 66]
+    },
+    {
+      "id": "pipeline",
+      "type": "backend",
+      "label": "RAG.ingest",
+      "sublabel": "coordina ingesta y decide caché / transcripción",
+      "pos": [270, 235],
+      "size": [210, 76]
+    },
+    {
+      "id": "transcript_cache",
+      "type": "database",
+      "label": "Transcripción en caché",
+      "sublabel": "data/transcripts/<video>.json",
+      "pos": [300, 70],
+      "size": [210, 76]
+    },
+    {
+      "id": "transcribe",
+      "type": "backend",
+      "label": "Transcripción",
+      "sublabel": "motor TRANSCRIBER + modelo Whisper",
+      "pos": [564, 235],
+      "size": [190, 76]
+    },
+    {
+      "id": "segments",
+      "type": "backend",
+      "label": "Segmentos Whisper",
+      "sublabel": "{ start, end, text }",
+      "pos": [778, 235],
+      "size": [170, 76]
+    },
+    {
+      "id": "chunking",
+      "type": "backend",
+      "label": "Chunks",
+      "sublabel": "agrupa segmentos; conserva start y end",
+      "pos": [975, 235],
+      "size": [190, 76]
+    },
+    {
+      "id": "embedder",
+      "type": "backend",
+      "label": "Embeddings",
+      "sublabel": "un vector por texto de chunk",
+      "pos": [1200, 235],
+      "size": [170, 76]
+    },
+    {
+      "id": "ollama",
+      "type": "external",
+      "label": "Ollama nativo en Mac",
+      "sublabel": "API compatible OpenAI · bge-m3 por defecto",
+      "pos": [1200, 80],
+      "size": [190, 76]
+    },
+    {
+      "id": "qdrant",
+      "type": "database",
+      "label": "Qdrant",
+      "sublabel": "vector + payload: video, texto, start, end",
+      "pos": [1200, 420],
+      "size": [205, 76]
+    }
+  ],
+  "boundaries": [
+    {"kind": "region", "label": "Docker · Qdrant", "wraps": ["qdrant"]}
+  ],
+  "connections": [
+    {"id": "videos-to-gradio", "from": "videos", "to": "gradio", "label": "opciones desde data/videos/", "variant": "default", "fromSide": "bottom", "toSide": "top"},
+    {"id": "select-video", "from": "gradio", "to": "pipeline", "label": "video", "variant": "emphasis"},
+    {"id": "lookup-cache", "from": "pipeline", "to": "transcript_cache", "label": "leer salvo force", "fromSide": "top", "toSide": "right"},
+    {"id": "cache-hit", "from": "transcript_cache", "to": "segments", "label": "caché reutilizada", "variant": "emphasis", "fromSide": "right", "toSide": "top"},
+    {"id": "cache-miss-to-transcribe", "from": "pipeline", "to": "transcribe", "label": "miss / force", "variant": "default"},
+    {"id": "new-transcript", "from": "transcribe", "to": "segments", "label": "", "variant": "default"},
+    {"id": "write-cache", "from": "transcribe", "to": "transcript_cache", "label": "guardar JSON", "variant": "dashed", "fromSide": "top", "toSide": "bottom"},
+    {"id": "segments-to-chunks", "from": "segments", "to": "chunking", "label": "", "variant": "default"},
+    {"id": "chunks-to-embed", "from": "chunking", "to": "embedder", "label": "texto", "variant": "default"},
+    {"id": "ollama-embeddings", "from": "embedder", "to": "ollama", "label": "API embeddings", "fromSide": "top", "toSide": "bottom"},
+    {"id": "vectors-to-qdrant", "from": "embedder", "to": "qdrant", "label": "vectores + metadatos", "variant": "emphasis", "fromSide": "bottom", "toSide": "top"}
+  ],
+  "cards": [
+    {"dot": "amber", "title": "Transcripción intercambiable", "items": ["TRANSCRIBER=faster-whisper: CPU, funciona dentro del contenedor app.", "TRANSCRIBER=mlx: nativo en Mac con Apple Silicon; fuera de Docker.", "TRANSCRIBER=openai: API compatible con OpenAI; envía audio extraído.", "La app y el procesamiento corren en Docker; Ignorar caché fuerza una nueva transcripción, guardada en data/transcripts/<video>.json."]},
+    {"dot": "cyan", "title": "Chunking configurable", "items": ["CHUNK_MAX_CHARS limita los caracteres agrupados (por defecto 700).", "CHUNK_OVERLAP_SEGMENTS repite segmentos entre ventanas (por defecto 1).", "Cada chunk contiene texto, inicio del primer segmento y final del último."]},
+    {"dot": "emerald", "title": "Almacenamiento", "items": ["Por defecto VECTOR_STORE=qdrant: Qdrant guarda cada vector con payload {video, id, start, end, text}.", "VECTOR_STORE=numpy selecciona NumpyStore como almacén alternativo; guarda vectores e índice de metadatos localmente.", "Reindexar un video reemplaza sus puntos anteriores en el almacén seleccionado."]}
+  ]
+}

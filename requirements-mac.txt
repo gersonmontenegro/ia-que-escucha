@@ -1,0 +1,5 @@
+# Solo para transcribir de forma NATIVA en el Mac con la GPU de Apple Silicon.
+# Docker en macOS no tiene acceso a la GPU (Metal), por eso MLX corre fuera del contenedor.
+# Requiere ffmpeg instalado:  brew install ffmpeg
+mlx-whisper==0.4.3
+python-dotenv>=1.0

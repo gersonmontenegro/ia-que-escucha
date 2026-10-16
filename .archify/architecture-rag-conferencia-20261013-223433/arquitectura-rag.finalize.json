@@ -1,0 +1,1248 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "architecture",
+  "quality": "showcase",
+  "startedAt": "2026-10-14T03:44:43.812Z",
+  "specification": {
+    "path": "/Users/grs/Documents/repos/aunar/ia-que-escucha/.archify/architecture-rag-conferencia-20261013-223433/candidate.json",
+    "sha256": "33b8e3d3114d3a5c1b281f4bd47ce7cc33964fb3f647a9d991464d5477333fb3",
+    "bytes": 4267
+  },
+  "artifact": {
+    "path": "/Users/grs/Documents/repos/aunar/ia-que-escucha/.archify/architecture-rag-conferencia-20261013-223433/arquitectura-rag.html",
+    "sha256": "29a5d144edf6cb3f0ebde981cb3c72c2db19f5611560eb535e12048f52db9810",
+    "bytes": 832114
+  },
+  "stages": {
+    "validate": {
+      "status": "pass",
+      "exitCode": 0,
+      "durationMs": null,
+      "execution": "embedded-in-deliver",
+      "command": [
+        "/Users/grs/.nvm/versions/node/v24.19.0/bin/node",
+        "/private/var/folders/qr/vht01ly571zgr343k434xf7w0000gn/T/opencode/archify/archify/bin/archify.mjs",
+        "deliver",
+        "architecture",
+        "/Users/grs/Documents/repos/aunar/ia-que-escucha/.archify/architecture-rag-conferencia-20261013-223433/candidate.json",
+        "/Users/grs/Documents/repos/aunar/ia-que-escucha/.archify/architecture-rag-conferencia-20261013-223433/arquitectura-rag.html",
+        "--quality",
+        "showcase",
+        "--json"
+      ],
+      "receipt": {
+        "schemaVersion": 1,
+        "ok": true,
+        "command": "validate",
+        "specification": {
+          "sha256": "33b8e3d3114d3a5c1b281f4bd47ce7cc33964fb3f647a9d991464d5477333fb3",
+          "bytes": 4267
+        },
+        "validation": {
+          "checksPassed": 9,
+          "checkCount": 9,
+          "compositionProfile": "showcase",
+          "compositionStatus": "pass",
+          "errors": 0,
+          "warnings": 0
+        }
+      }
+    },
+    "deliver": {
+      "status": "pass",
+      "exitCode": 0,
+      "durationMs": 258,
+      "command": [
+        "/Users/grs/.nvm/versions/node/v24.19.0/bin/node",
+        "/private/var/folders/qr/vht01ly571zgr343k434xf7w0000gn/T/opencode/archify/archify/bin/archify.mjs",
+        "deliver",
+        "architecture",
+        "/Users/grs/Documents/repos/aunar/ia-que-escucha/.archify/architecture-rag-conferencia-20261013-223433/candidate.json",
+        "/Users/grs/Documents/repos/aunar/ia-que-escucha/.archify/architecture-rag-conferencia-20261013-223433/arquitectura-rag.html",
+        "--quality",
+        "showcase",
+        "--json"
+      ],
+      "receipt": {
+        "schemaVersion": 1,
+        "receiptId": "9b94465f-c3c4-4099-8ce6-6f4ad8177944",
+        "ok": true,
+        "command": "deliver",
+        "type": "architecture",
+        "input": "/Users/grs/Documents/repos/aunar/ia-que-escucha/.archify/architecture-rag-conferencia-20261013-223433/candidate.json",
+        "output": "/Users/grs/Documents/repos/aunar/ia-que-escucha/.archify/architecture-rag-conferencia-20261013-223433/arquitectura-rag.html",
+        "specification": {
+          "sha256": "33b8e3d3114d3a5c1b281f4bd47ce7cc33964fb3f647a9d991464d5477333fb3",
+          "bytes": 4267
+        },
+        "artifact": {
+          "sha256": "29a5d144edf6cb3f0ebde981cb3c72c2db19f5611560eb535e12048f52db9810",
+          "bytes": 832114
+        },
+        "validation": {
+          "checksPassed": 9,
+          "checkCount": 9,
+          "compositionProfile": "showcase",
+          "compositionStatus": "pass",
+          "errors": 0,
+          "warnings": 0
+        },
+        "update": {
+          "status": "unavailable",
+          "installedVersion": null,
+          "availableVersion": null,
+          "releaseNotes": null,
+          "checkedAt": null,
+          "source": null,
+          "noticeRequired": false,
+          "noticeText": null,
+          "reason": "disabled"
+        }
+      }
+    },
+    "check": {
+      "status": "pass",
+      "exitCode": 0,
+      "durationMs": 105,
+      "command": [
+        "/Users/grs/.nvm/versions/node/v24.19.0/bin/node",
+        "/private/var/folders/qr/vht01ly571zgr343k434xf7w0000gn/T/opencode/archify/archify/bin/archify.mjs",
+        "check",
+        "/Users/grs/Documents/repos/aunar/ia-que-escucha/.archify/architecture-rag-conferencia-20261013-223433/arquitectura-rag.html",
+        "--require-provenance"
+      ],
+      "receipt": {
+        "ok": true,
+        "file": "/Users/grs/Documents/repos/aunar/ia-que-escucha/.archify/architecture-rag-conferencia-20261013-223433/arquitectura-rag.html",
+        "artifact": {
+          "sha256": "29a5d144edf6cb3f0ebde981cb3c72c2db19f5611560eb535e12048f52db9810",
+          "bytes": 832114
+        },
+        "checks": [
+          {
+            "name": "single_svg",
+            "ok": true,
+            "details": [
+              "found 1 <svg> block(s)"
+            ]
+          },
+          {
+            "name": "finite_svg",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "orthogonal_arrows",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "label_route_clearance",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "relationship_crossings",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "relationship_corridors",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "container_border_runs",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "route_rhythm",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "legend_clearance",
+            "ok": true,
+            "details": []
+          }
+        ],
+        "composition": {
+          "schemaVersion": 1,
+          "profile": "showcase",
+          "status": "pass",
+          "summary": {
+            "errors": 0,
+            "warnings": 0
+          },
+          "metrics": {
+            "properCrossings": 0,
+            "resolvedCrossovers": 9,
+            "ambiguousCorridors": 0,
+            "arrowheadCollisions": 0,
+            "containerBorderRuns": 0,
+            "labelRouteClearanceIssues": 0,
+            "labelCanvasOverflowIssues": 0,
+            "minLabelRouteClearance": 5,
+            "desktopReadabilityIssues": 0,
+            "viewportHeightIssues": 0,
+            "minProjectedNodeTextPx": 6.048780487804878,
+            "maxBends": 4,
+            "routesOverSuggestedBends": 3,
+            "maxStretch": 1,
+            "routesOverSuggestedStretch": 0,
+            "minSegmentPx": 24,
+            "minInteriorSegmentPx": 67,
+            "shortSegmentCount": 0,
+            "shortEndpointSegmentCount": 0,
+            "shortInteriorSegmentCount": 0,
+            "microSegmentCount": 0
+          },
+          "suggestedLimits": {
+            "bendsPerRelationship": 2,
+            "stretch": 1.35,
+            "segmentPx": 16,
+            "microSegmentPx": 8
+          },
+          "routeReview": {
+            "crossings": [
+              {
+                "left": {
+                  "id": "whisper-cache",
+                  "from": "whisper",
+                  "to": "transcript",
+                  "label": "segments JSON",
+                  "collectionIndex": 5,
+                  "artifactIndex": 6
+                },
+                "right": {
+                  "id": "rag-qdrant",
+                  "from": "rag",
+                  "to": "qdrant",
+                  "label": "upsert / top-k",
+                  "collectionIndex": 10,
+                  "artifactIndex": 11
+                },
+                "point": [
+                  778.7000000000002,
+                  479
+                ]
+              },
+              {
+                "left": {
+                  "id": "whisper-cache",
+                  "from": "whisper",
+                  "to": "transcript",
+                  "label": "segments JSON",
+                  "collectionIndex": 5,
+                  "artifactIndex": 6
+                },
+                "right": {
+                  "id": "qdrant-rag",
+                  "from": "qdrant",
+                  "to": "rag",
+                  "label": "hits + tiempos",
+                  "collectionIndex": 11,
+                  "artifactIndex": 12
+                },
+                "point": [
+                  683,
+                  479
+                ]
+              },
+              {
+                "left": {
+                  "id": "rag-cache",
+                  "from": "rag",
+                  "to": "transcript",
+                  "label": "read cache",
+                  "collectionIndex": 6,
+                  "artifactIndex": 7
+                },
+                "right": {
+                  "id": "qdrant-rag",
+                  "from": "qdrant",
+                  "to": "rag",
+                  "label": "hits + tiempos",
+                  "collectionIndex": 11,
+                  "artifactIndex": 12
+                },
+                "point": [
+                  639.5,
+                  314
+                ],
+                "sharedNode": "rag"
+              },
+              {
+                "left": {
+                  "id": "rag-cache",
+                  "from": "rag",
+                  "to": "transcript",
+                  "label": "read cache",
+                  "collectionIndex": 6,
+                  "artifactIndex": 7
+                },
+                "right": {
+                  "id": "rag-ollama",
+                  "from": "rag",
+                  "to": "ollama",
+                  "label": "prompt + Qwen",
+                  "collectionIndex": 12,
+                  "artifactIndex": 13
+                },
+                "point": [
+                  667.5,
+                  365
+                ],
+                "sharedNode": "rag"
+              },
+              {
+                "left": {
+                  "id": "rag-cache",
+                  "from": "rag",
+                  "to": "transcript",
+                  "label": "read cache",
+                  "collectionIndex": 6,
+                  "artifactIndex": 7
+                },
+                "right": {
+                  "id": "ollama-rag",
+                  "from": "ollama",
+                  "to": "rag",
+                  "label": "stream",
+                  "collectionIndex": 13,
+                  "artifactIndex": 14
+                },
+                "point": [
+                  653.5,
+                  365
+                ],
+                "sharedNode": "rag"
+              },
+              {
+                "left": {
+                  "id": "rag-qdrant",
+                  "from": "rag",
+                  "to": "qdrant",
+                  "label": "upsert / top-k",
+                  "collectionIndex": 10,
+                  "artifactIndex": 11
+                },
+                "right": {
+                  "id": "qdrant-rag",
+                  "from": "qdrant",
+                  "to": "rag",
+                  "label": "hits + tiempos",
+                  "collectionIndex": 11,
+                  "artifactIndex": 12
+                },
+                "point": [
+                  625.5,
+                  314
+                ],
+                "sharedNode": "rag"
+              },
+              {
+                "left": {
+                  "id": "qdrant-rag",
+                  "from": "qdrant",
+                  "to": "rag",
+                  "label": "hits + tiempos",
+                  "collectionIndex": 11,
+                  "artifactIndex": 12
+                },
+                "right": {
+                  "id": "rag-ollama",
+                  "from": "rag",
+                  "to": "ollama",
+                  "label": "prompt + Qwen",
+                  "collectionIndex": 12,
+                  "artifactIndex": 13
+                },
+                "point": [
+                  683,
+                  412
+                ],
+                "sharedNode": "rag"
+              },
+              {
+                "left": {
+                  "id": "qdrant-rag",
+                  "from": "qdrant",
+                  "to": "rag",
+                  "label": "hits + tiempos",
+                  "collectionIndex": 11,
+                  "artifactIndex": 12
+                },
+                "right": {
+                  "id": "ollama-rag",
+                  "from": "ollama",
+                  "to": "rag",
+                  "label": "stream",
+                  "collectionIndex": 13,
+                  "artifactIndex": 14
+                },
+                "point": [
+                  683,
+                  381
+                ],
+                "sharedNode": "rag"
+              },
+              {
+                "left": {
+                  "id": "rag-ollama",
+                  "from": "rag",
+                  "to": "ollama",
+                  "label": "prompt + Qwen",
+                  "collectionIndex": 12,
+                  "artifactIndex": 13
+                },
+                "right": {
+                  "id": "ollama-rag",
+                  "from": "ollama",
+                  "to": "rag",
+                  "label": "stream",
+                  "collectionIndex": 13,
+                  "artifactIndex": 14
+                },
+                "point": [
+                  667.5,
+                  381
+                ],
+                "sharedNode": "rag"
+              }
+            ],
+            "detours": [
+              {
+                "relationship": {
+                  "id": "rag-qdrant",
+                  "from": "rag",
+                  "to": "qdrant",
+                  "label": "upsert / top-k",
+                  "collectionIndex": 10,
+                  "artifactIndex": 11
+                },
+                "bends": 4,
+                "stretch": 1
+              },
+              {
+                "relationship": {
+                  "id": "qdrant-rag",
+                  "from": "qdrant",
+                  "to": "rag",
+                  "label": "hits + tiempos",
+                  "collectionIndex": 11,
+                  "artifactIndex": 12
+                },
+                "bends": 3,
+                "stretch": 1
+              },
+              {
+                "relationship": {
+                  "id": "rag-ollama",
+                  "from": "rag",
+                  "to": "ollama",
+                  "label": "prompt + Qwen",
+                  "collectionIndex": 12,
+                  "artifactIndex": 13
+                },
+                "bends": 3,
+                "stretch": 1
+              }
+            ]
+          },
+          "leadingSpace": {
+            "measured": true,
+            "emptyTopPx": 210,
+            "emptyTopRatio": 0.264,
+            "occupiedTop": 210,
+            "viewBoxTop": 0,
+            "canvasHeight": 796,
+            "typicalNodeHeight": 78,
+            "reviewSuggested": true
+          },
+          "desktopReadability": {
+            "budgetBasis": "legacy-930",
+            "readerContract": "declared-wide-v1",
+            "availableDiagramWidth": 930,
+            "actualBudgetPx": 930,
+            "limit": "legacy",
+            "requestedTargetPx": 7.5,
+            "requestedTargetMet": false,
+            "hardFloorPx": 6,
+            "hardFloorMet": true,
+            "minimumOwner": {
+              "kind": "edge",
+              "id": "person-ui",
+              "from": "audience",
+              "to": "gradio"
+            },
+            "minimumSourceTextPx": 8,
+            "minimumProjectedTextPx": 6.048780487804878,
+            "semanticTextCount": 32
+          },
+          "issues": []
+        },
+        "provenance": "current",
+        "deliveryReceiptId": "9b94465f-c3c4-4099-8ce6-6f4ad8177944"
+      }
+    },
+    "browser-check": {
+      "status": "pass",
+      "exitCode": 0,
+      "durationMs": 6370,
+      "command": [
+        "/Users/grs/.nvm/versions/node/v24.19.0/bin/node",
+        "/private/var/folders/qr/vht01ly571zgr343k434xf7w0000gn/T/opencode/archify/archify/bin/archify.mjs",
+        "browser-check",
+        "/Users/grs/Documents/repos/aunar/ia-que-escucha/.archify/architecture-rag-conferencia-20261013-223433/arquitectura-rag.html",
+        "--json",
+        "--require-provenance"
+      ],
+      "execution": "in-process",
+      "receipt": {
+        "schemaVersion": 1,
+        "ok": true,
+        "command": "browser-check",
+        "evidenceKind": "automated-browser",
+        "status": "pass",
+        "visualReview": "not-requested",
+        "provenance": "current",
+        "deliveryReceiptId": "9b94465f-c3c4-4099-8ce6-6f4ad8177944",
+        "artifact": {
+          "path": "/Users/grs/Documents/repos/aunar/ia-que-escucha/.archify/architecture-rag-conferencia-20261013-223433/arquitectura-rag.html",
+          "sha256": "29a5d144edf6cb3f0ebde981cb3c72c2db19f5611560eb535e12048f52db9810",
+          "bytes": 832114
+        },
+        "state": {
+          "detail": "read",
+          "motion": "still"
+        },
+        "chrome": {
+          "status": "available",
+          "executable": "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+        },
+        "diagnostics": [],
+        "containment": {
+          "status": "pass",
+          "policy": "fit-or-reader-declared-readable-vertical-scroll",
+          "viewports": [
+            {
+              "width": 1440,
+              "height": 900,
+              "theme": "light",
+              "innerWidth": 1440,
+              "innerHeight": 900,
+              "scrollWidth": 1440,
+              "scrollHeight": 900,
+              "overflowX": false,
+              "overflowY": false,
+              "verticalScrollAccepted": false,
+              "overflowDisposition": "contained",
+              "readerLayout": "adaptive",
+              "readerOverflow": null,
+              "readerFit": "intrinsic-height",
+              "ok": true,
+              "readerWidth": 1183,
+              "diagramWidth": 1153,
+              "pageComposition": {
+                "bodyPaddingPx": 12,
+                "headerPx": 52,
+                "diagramChromePx": 78,
+                "svgPx": 746,
+                "cardsPx": 0,
+                "viewBoxHeight": 796
+              },
+              "viewBoxWidth": 1230,
+              "minimumProjectedNodeTextPx": 7.4991869918699186,
+              "minimumProjectedNonEdgeTextPx": 8.061626016260162,
+              "minimumProjectedEdgeTextPx": 7.4991869918699186,
+              "minimumProjectedNodeText": "pregunta",
+              "minimumProjectedNodeTextDetail": "edge",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "edge",
+                "id": "person-ui",
+                "from": "audience",
+                "to": "gradio"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 54,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            },
+            {
+              "width": 1600,
+              "height": 1000,
+              "theme": "light",
+              "innerWidth": 1600,
+              "innerHeight": 1000,
+              "scrollWidth": 1600,
+              "scrollHeight": 1000,
+              "overflowX": false,
+              "overflowY": false,
+              "verticalScrollAccepted": false,
+              "overflowDisposition": "contained",
+              "readerLayout": "adaptive",
+              "readerOverflow": null,
+              "readerFit": "intrinsic-height",
+              "ok": true,
+              "readerWidth": 1235,
+              "diagramWidth": 1205,
+              "pageComposition": {
+                "bodyPaddingPx": 64,
+                "headerPx": 60,
+                "diagramChromePx": 84,
+                "svgPx": 780,
+                "cardsPx": 0,
+                "viewBoxHeight": 796
+              },
+              "viewBoxWidth": 1230,
+              "minimumProjectedNodeTextPx": 7.837398373983739,
+              "minimumProjectedNonEdgeTextPx": 8.425203252032519,
+              "minimumProjectedEdgeTextPx": 7.837398373983739,
+              "minimumProjectedNodeText": "pregunta",
+              "minimumProjectedNodeTextDetail": "edge",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "edge",
+                "id": "person-ui",
+                "from": "audience",
+                "to": "gradio"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 54,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            },
+            {
+              "width": 1920,
+              "height": 1080,
+              "theme": "light",
+              "innerWidth": 1920,
+              "innerHeight": 1080,
+              "scrollWidth": 1920,
+              "scrollHeight": 1080,
+              "overflowX": false,
+              "overflowY": false,
+              "verticalScrollAccepted": false,
+              "overflowDisposition": "contained",
+              "readerLayout": "adaptive",
+              "readerOverflow": null,
+              "readerFit": "intrinsic-height",
+              "ok": true,
+              "readerWidth": 1359,
+              "diagramWidth": 1329,
+              "pageComposition": {
+                "bodyPaddingPx": 64,
+                "headerPx": 60,
+                "diagramChromePx": 84,
+                "svgPx": 860,
+                "cardsPx": 0,
+                "viewBoxHeight": 796
+              },
+              "viewBoxWidth": 1230,
+              "minimumProjectedNodeTextPx": 8,
+              "minimumProjectedNonEdgeTextPx": 8.6,
+              "minimumProjectedEdgeTextPx": 8,
+              "minimumProjectedNodeText": "pregunta",
+              "minimumProjectedNodeTextDetail": "edge",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "edge",
+                "id": "person-ui",
+                "from": "audience",
+                "to": "gradio"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 54,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            },
+            {
+              "width": 2048,
+              "height": 1320,
+              "theme": "light",
+              "innerWidth": 2048,
+              "innerHeight": 1320,
+              "scrollWidth": 2048,
+              "scrollHeight": 1320,
+              "overflowX": false,
+              "overflowY": false,
+              "verticalScrollAccepted": false,
+              "overflowDisposition": "contained",
+              "readerLayout": "adaptive",
+              "readerOverflow": null,
+              "readerFit": "intrinsic-height",
+              "ok": true,
+              "readerWidth": 1722,
+              "diagramWidth": 1672,
+              "pageComposition": {
+                "bodyPaddingPx": 64,
+                "headerPx": 68,
+                "diagramChromePx": 94,
+                "svgPx": 1082,
+                "cardsPx": 0,
+                "viewBoxHeight": 796
+              },
+              "viewBoxWidth": 1230,
+              "minimumProjectedNodeTextPx": 8,
+              "minimumProjectedNonEdgeTextPx": 8.6,
+              "minimumProjectedEdgeTextPx": 8,
+              "minimumProjectedNodeText": "pregunta",
+              "minimumProjectedNodeTextDetail": "edge",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "edge",
+                "id": "person-ui",
+                "from": "audience",
+                "to": "gradio"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 44,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            }
+          ]
+        },
+        "themeStates": {
+          "status": "pass",
+          "viewports": [
+            {
+              "width": 1440,
+              "height": 900,
+              "requestedTheme": "light",
+              "resolvedTheme": "light",
+              "ok": true
+            },
+            {
+              "width": 1600,
+              "height": 1000,
+              "requestedTheme": "light",
+              "resolvedTheme": "light",
+              "ok": true
+            },
+            {
+              "width": 1920,
+              "height": 1080,
+              "requestedTheme": "light",
+              "resolvedTheme": "light",
+              "ok": true
+            },
+            {
+              "width": 2048,
+              "height": 1320,
+              "requestedTheme": "light",
+              "resolvedTheme": "light",
+              "ok": true
+            },
+            {
+              "width": 1440,
+              "height": 900,
+              "requestedTheme": "dark",
+              "resolvedTheme": "dark",
+              "ok": true
+            },
+            {
+              "width": 2048,
+              "height": 1320,
+              "requestedTheme": "dark",
+              "resolvedTheme": "dark",
+              "ok": true
+            }
+          ]
+        },
+        "readability": {
+          "status": "pass",
+          "minimumProjectedNodeTextPx": 6,
+          "viewports": [
+            {
+              "width": 1440,
+              "height": 900,
+              "theme": "light",
+              "innerWidth": 1440,
+              "innerHeight": 900,
+              "scrollWidth": 1440,
+              "scrollHeight": 900,
+              "overflowX": false,
+              "overflowY": false,
+              "verticalScrollAccepted": false,
+              "overflowDisposition": "contained",
+              "readerLayout": "adaptive",
+              "readerOverflow": null,
+              "readerFit": "intrinsic-height",
+              "ok": true,
+              "readerWidth": 1183,
+              "diagramWidth": 1153,
+              "pageComposition": {
+                "bodyPaddingPx": 12,
+                "headerPx": 52,
+                "diagramChromePx": 78,
+                "svgPx": 746,
+                "cardsPx": 0,
+                "viewBoxHeight": 796
+              },
+              "viewBoxWidth": 1230,
+              "minimumProjectedNodeTextPx": 7.4991869918699186,
+              "minimumProjectedNonEdgeTextPx": 8.061626016260162,
+              "minimumProjectedEdgeTextPx": 7.4991869918699186,
+              "minimumProjectedNodeText": "pregunta",
+              "minimumProjectedNodeTextDetail": "edge",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "edge",
+                "id": "person-ui",
+                "from": "audience",
+                "to": "gradio"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 54,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            },
+            {
+              "width": 1600,
+              "height": 1000,
+              "theme": "light",
+              "innerWidth": 1600,
+              "innerHeight": 1000,
+              "scrollWidth": 1600,
+              "scrollHeight": 1000,
+              "overflowX": false,
+              "overflowY": false,
+              "verticalScrollAccepted": false,
+              "overflowDisposition": "contained",
+              "readerLayout": "adaptive",
+              "readerOverflow": null,
+              "readerFit": "intrinsic-height",
+              "ok": true,
+              "readerWidth": 1235,
+              "diagramWidth": 1205,
+              "pageComposition": {
+                "bodyPaddingPx": 64,
+                "headerPx": 60,
+                "diagramChromePx": 84,
+                "svgPx": 780,
+                "cardsPx": 0,
+                "viewBoxHeight": 796
+              },
+              "viewBoxWidth": 1230,
+              "minimumProjectedNodeTextPx": 7.837398373983739,
+              "minimumProjectedNonEdgeTextPx": 8.425203252032519,
+              "minimumProjectedEdgeTextPx": 7.837398373983739,
+              "minimumProjectedNodeText": "pregunta",
+              "minimumProjectedNodeTextDetail": "edge",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "edge",
+                "id": "person-ui",
+                "from": "audience",
+                "to": "gradio"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 54,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            },
+            {
+              "width": 1920,
+              "height": 1080,
+              "theme": "light",
+              "innerWidth": 1920,
+              "innerHeight": 1080,
+              "scrollWidth": 1920,
+              "scrollHeight": 1080,
+              "overflowX": false,
+              "overflowY": false,
+              "verticalScrollAccepted": false,
+              "overflowDisposition": "contained",
+              "readerLayout": "adaptive",
+              "readerOverflow": null,
+              "readerFit": "intrinsic-height",
+              "ok": true,
+              "readerWidth": 1359,
+              "diagramWidth": 1329,
+              "pageComposition": {
+                "bodyPaddingPx": 64,
+                "headerPx": 60,
+                "diagramChromePx": 84,
+                "svgPx": 860,
+                "cardsPx": 0,
+                "viewBoxHeight": 796
+              },
+              "viewBoxWidth": 1230,
+              "minimumProjectedNodeTextPx": 8,
+              "minimumProjectedNonEdgeTextPx": 8.6,
+              "minimumProjectedEdgeTextPx": 8,
+              "minimumProjectedNodeText": "pregunta",
+              "minimumProjectedNodeTextDetail": "edge",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "edge",
+                "id": "person-ui",
+                "from": "audience",
+                "to": "gradio"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 54,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            },
+            {
+              "width": 2048,
+              "height": 1320,
+              "theme": "light",
+              "innerWidth": 2048,
+              "innerHeight": 1320,
+              "scrollWidth": 2048,
+              "scrollHeight": 1320,
+              "overflowX": false,
+              "overflowY": false,
+              "verticalScrollAccepted": false,
+              "overflowDisposition": "contained",
+              "readerLayout": "adaptive",
+              "readerOverflow": null,
+              "readerFit": "intrinsic-height",
+              "ok": true,
+              "readerWidth": 1722,
+              "diagramWidth": 1672,
+              "pageComposition": {
+                "bodyPaddingPx": 64,
+                "headerPx": 68,
+                "diagramChromePx": 94,
+                "svgPx": 1082,
+                "cardsPx": 0,
+                "viewBoxHeight": 796
+              },
+              "viewBoxWidth": 1230,
+              "minimumProjectedNodeTextPx": 8,
+              "minimumProjectedNonEdgeTextPx": 8.6,
+              "minimumProjectedEdgeTextPx": 8,
+              "minimumProjectedNodeText": "pregunta",
+              "minimumProjectedNodeTextDetail": "edge",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "edge",
+                "id": "person-ui",
+                "from": "audience",
+                "to": "gradio"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 44,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            }
+          ]
+        },
+        "viewerChrome": {
+          "status": "pass",
+          "viewports": [
+            {
+              "width": 1440,
+              "height": 900,
+              "theme": "light",
+              "innerWidth": 1440,
+              "innerHeight": 900,
+              "scrollWidth": 1440,
+              "scrollHeight": 900,
+              "overflowX": false,
+              "overflowY": false,
+              "verticalScrollAccepted": false,
+              "overflowDisposition": "contained",
+              "readerLayout": "adaptive",
+              "readerOverflow": null,
+              "readerFit": "intrinsic-height",
+              "ok": true,
+              "readerWidth": 1183,
+              "diagramWidth": 1153,
+              "pageComposition": {
+                "bodyPaddingPx": 12,
+                "headerPx": 52,
+                "diagramChromePx": 78,
+                "svgPx": 746,
+                "cardsPx": 0,
+                "viewBoxHeight": 796
+              },
+              "viewBoxWidth": 1230,
+              "minimumProjectedNodeTextPx": 7.4991869918699186,
+              "minimumProjectedNonEdgeTextPx": 8.061626016260162,
+              "minimumProjectedEdgeTextPx": 7.4991869918699186,
+              "minimumProjectedNodeText": "pregunta",
+              "minimumProjectedNodeTextDetail": "edge",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "edge",
+                "id": "person-ui",
+                "from": "audience",
+                "to": "gradio"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 54,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            },
+            {
+              "width": 1600,
+              "height": 1000,
+              "theme": "light",
+              "innerWidth": 1600,
+              "innerHeight": 1000,
+              "scrollWidth": 1600,
+              "scrollHeight": 1000,
+              "overflowX": false,
+              "overflowY": false,
+              "verticalScrollAccepted": false,
+              "overflowDisposition": "contained",
+              "readerLayout": "adaptive",
+              "readerOverflow": null,
+              "readerFit": "intrinsic-height",
+              "ok": true,
+              "readerWidth": 1235,
+              "diagramWidth": 1205,
+              "pageComposition": {
+                "bodyPaddingPx": 64,
+                "headerPx": 60,
+                "diagramChromePx": 84,
+                "svgPx": 780,
+                "cardsPx": 0,
+                "viewBoxHeight": 796
+              },
+              "viewBoxWidth": 1230,
+              "minimumProjectedNodeTextPx": 7.837398373983739,
+              "minimumProjectedNonEdgeTextPx": 8.425203252032519,
+              "minimumProjectedEdgeTextPx": 7.837398373983739,
+              "minimumProjectedNodeText": "pregunta",
+              "minimumProjectedNodeTextDetail": "edge",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "edge",
+                "id": "person-ui",
+                "from": "audience",
+                "to": "gradio"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 54,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            },
+            {
+              "width": 1920,
+              "height": 1080,
+              "theme": "light",
+              "innerWidth": 1920,
+              "innerHeight": 1080,
+              "scrollWidth": 1920,
+              "scrollHeight": 1080,
+              "overflowX": false,
+              "overflowY": false,
+              "verticalScrollAccepted": false,
+              "overflowDisposition": "contained",
+              "readerLayout": "adaptive",
+              "readerOverflow": null,
+              "readerFit": "intrinsic-height",
+              "ok": true,
+              "readerWidth": 1359,
+              "diagramWidth": 1329,
+              "pageComposition": {
+                "bodyPaddingPx": 64,
+                "headerPx": 60,
+                "diagramChromePx": 84,
+                "svgPx": 860,
+                "cardsPx": 0,
+                "viewBoxHeight": 796
+              },
+              "viewBoxWidth": 1230,
+              "minimumProjectedNodeTextPx": 8,
+              "minimumProjectedNonEdgeTextPx": 8.6,
+              "minimumProjectedEdgeTextPx": 8,
+              "minimumProjectedNodeText": "pregunta",
+              "minimumProjectedNodeTextDetail": "edge",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "edge",
+                "id": "person-ui",
+                "from": "audience",
+                "to": "gradio"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 54,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            },
+            {
+              "width": 2048,
+              "height": 1320,
+              "theme": "light",
+              "innerWidth": 2048,
+              "innerHeight": 1320,
+              "scrollWidth": 2048,
+              "scrollHeight": 1320,
+              "overflowX": false,
+              "overflowY": false,
+              "verticalScrollAccepted": false,
+              "overflowDisposition": "contained",
+              "readerLayout": "adaptive",
+              "readerOverflow": null,
+              "readerFit": "intrinsic-height",
+              "ok": true,
+              "readerWidth": 1722,
+              "diagramWidth": 1672,
+              "pageComposition": {
+                "bodyPaddingPx": 64,
+                "headerPx": 68,
+                "diagramChromePx": 94,
+                "svgPx": 1082,
+                "cardsPx": 0,
+                "viewBoxHeight": 796
+              },
+              "viewBoxWidth": 1230,
+              "minimumProjectedNodeTextPx": 8,
+              "minimumProjectedNonEdgeTextPx": 8.6,
+              "minimumProjectedEdgeTextPx": 8,
+              "minimumProjectedNodeText": "pregunta",
+              "minimumProjectedNodeTextDetail": "edge",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "edge",
+                "id": "person-ui",
+                "from": "audience",
+                "to": "gradio"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 44,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            }
+          ]
+        },
+        "captures": {
+          "status": "not-requested",
+          "screenshots": [],
+          "contactSheet": null
+        },
+        "sidecars": {
+          "receipt": "arquitectura-rag.browser-check.json",
+          "files": []
+        }
+      }
+    }
+  },
+  "diagnostics": [],
+  "evidence": {
+    "receipt": "/Users/grs/Documents/repos/aunar/ia-que-escucha/.archify/architecture-rag-conferencia-20261013-223433/arquitectura-rag.finalize.json",
+    "summaryReceipt": "/Users/grs/Documents/repos/aunar/ia-que-escucha/.archify/architecture-rag-conferencia-20261013-223433/arquitectura-rag.finalize-summary.json",
+    "browserCheckReceipt": "/Users/grs/Documents/repos/aunar/ia-que-escucha/.archify/architecture-rag-conferencia-20261013-223433/arquitectura-rag.browser-check.json"
+  },
+  "visualReview": "not-requested",
+  "finishedAt": "2026-10-14T03:44:50.696Z",
+  "durationMs": 6884,
+  "update": {
+    "status": "current",
+    "installedVersion": "3.1.0",
+    "availableVersion": "3.1.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-10-14T03:43:34.707Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  }
+}

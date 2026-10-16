@@ -1,0 +1,144 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "architecture",
+  "quality": "showcase",
+  "specification": {
+    "path": "/Users/grs/Documents/repos/aunar/ia-que-escucha/.archify/architecture-cita-reproduccion-20261015-231500/candidate.json",
+    "sha256": "4ecd56de23e2e64d532bb338ac817864b5b8636fc973bb52e4db8695babd51f9",
+    "bytes": 3789
+  },
+  "artifact": {
+    "path": "/Users/grs/Documents/repos/aunar/ia-que-escucha/.archify/architecture-cita-reproduccion-20261015-231500/cita-reproduccion.html",
+    "sha256": "da1afd1e8163409f1ddaa83ede34595b5fdd95e8fd77dcd3f49a648cd268356e",
+    "bytes": 821838
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/Users/grs/Documents/repos/aunar/ia-que-escucha/.archify/architecture-cita-reproduccion-20261015-231500/cita-reproduccion.finalize.json",
+    "summaryReceipt": "/Users/grs/Documents/repos/aunar/ia-que-escucha/.archify/architecture-cita-reproduccion-20261015-231500/cita-reproduccion.finalize-summary.json",
+    "browserCheckReceipt": "/Users/grs/Documents/repos/aunar/ia-que-escucha/.archify/architecture-cita-reproduccion-20261015-231500/cita-reproduccion.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.1.0",
+    "availableVersion": "3.1.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-10-16T03:55:15.663Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 1760,
+  "visualReviewRecommendation": {
+    "action": "inspect-route-readability",
+    "signals": {
+      "routesOverSuggestedBends": 5,
+      "routesOverSuggestedStretch": 1
+    },
+    "reason": "Automated gates passed, but crossings or detours still need perceptual review before claiming visual quality.",
+    "affectedRoutes": {
+      "crossings": [],
+      "detours": [
+        {
+          "relationship": {
+            "id": "inputs-to-resolver",
+            "from": "query_inputs",
+            "to": "citation_resolver",
+            "label": "answer + hits",
+            "collectionIndex": 0,
+            "artifactIndex": 1
+          },
+          "bends": 3,
+          "stretch": 1.261
+        },
+        {
+          "relationship": {
+            "id": "choices-to-radio",
+            "from": "citation_resolver",
+            "to": "citation_radio",
+            "label": "choices + valor n",
+            "collectionIndex": 1,
+            "artifactIndex": 2
+          },
+          "bends": 3,
+          "stretch": 1.284
+        },
+        {
+          "relationship": {
+            "id": "radio-to-user",
+            "from": "citation_radio",
+            "to": "user_select",
+            "label": "citas disponibles",
+            "collectionIndex": 2,
+            "artifactIndex": 3
+          },
+          "bends": 3,
+          "stretch": 1.309
+        },
+        {
+          "relationship": {
+            "id": "select-citation",
+            "from": "user_select",
+            "to": "jump_player_html",
+            "label": "n seleccionado",
+            "collectionIndex": 3,
+            "artifactIndex": 4
+          },
+          "bends": 3,
+          "stretch": 1.354
+        },
+        {
+          "relationship": {
+            "id": "serve-video",
+            "from": "jump_player_html",
+            "to": "gradio_file",
+            "label": "URL del archivo con #t=SEGUNDOS",
+            "collectionIndex": 4,
+            "artifactIndex": 5
+          },
+          "bends": 3,
+          "stretch": 1.288
+        }
+      ],
+      "truncated": false
+    },
+    "hints": [
+      "query_inputs → citation_resolver needs 3 bends: move node query_inputs or citation_resolver so they share a row or column with matching centers, or sit diagonally with a clear corner.",
+      "citation_resolver → citation_radio needs 3 bends: move node citation_resolver or citation_radio so they share a row or column with matching centers, or sit diagonally with a clear corner.",
+      "citation_radio → user_select needs 3 bends: move node citation_radio or user_select so they share a row or column with matching centers, or sit diagonally with a clear corner.",
+      "user_select → jump_player_html needs 3 bends: move node user_select or jump_player_html so they share a row or column with matching centers, or sit diagonally with a clear corner.",
+      "jump_player_html → gradio_file needs 3 bends: move node jump_player_html or gradio_file so they share a row or column with matching centers, or sit diagonally with a clear corner."
+    ],
+    "repair": "Trace these relationships at the desktop viewport. For Architecture, use references/architecture-layout-repair.md: reflow a blocked main path or tangled connected scene, and repair an isolated defect locally only when the surrounding composition is accepted. Preserve all semantic content and user-fixed geometry. Rerun finalize once after the edit."
+  },
+  "layoutReviewRecommendation": {
+    "action": "inspect-leading-space",
+    "evidence": {
+      "measured": true,
+      "emptyTopPx": 190,
+      "emptyTopRatio": 0.354,
+      "occupiedTop": 190,
+      "viewBoxTop": 0,
+      "canvasHeight": 536,
+      "typicalNodeHeight": 78,
+      "reviewSuggested": true
+    },
+    "reason": "Measured content, including routes and labels, leaves a large empty area above the diagram. This is a composition suggestion, not a failed gate.",
+    "repair": "Check whether that leading space is intentional. If not, reposition the connected scene nearer the canvas origin while retaining room for its actual boundaries, labels and return routes. Preserve all meaning and user-fixed geometry, then rerun finalize. No screenshot is required."
+  }
+}

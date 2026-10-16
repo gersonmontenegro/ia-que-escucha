@@ -1,0 +1,117 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Consulta con RAG: de la pregunta a la respuesta citada",
+    "locale": "es",
+    "output": ".archify/architecture-consulta-rag-20261015-231000/consulta-rag.html",
+    "quality_profile": "showcase"
+  },
+  "components": [
+    {
+      "id": "user",
+      "type": "external",
+      "label": "Usuario",
+      "sublabel": "escribe una pregunta",
+      "pos": [40, 185],
+      "size": [125, 72]
+    },
+    {
+      "id": "gradio_question",
+      "type": "frontend",
+      "label": "Gradio · pregunta",
+      "sublabel": "do_ask · recibe pregunta",
+      "pos": [235, 185],
+      "size": [175, 76]
+    },
+    {
+      "id": "question_embed",
+      "type": "backend",
+      "label": "Embedding de pregunta",
+      "sublabel": "RAG.retrieve → Embedder.embed_one",
+      "pos": [470, 185],
+      "size": [190, 76]
+    },
+    {
+      "id": "vector_store",
+      "type": "database",
+      "label": "Almacén vectorial",
+      "sublabel": "consulta por vector · límite TOP_K",
+      "pos": [720, 185],
+      "size": [190, 76]
+    },
+    {
+      "id": "hits_panel",
+      "type": "frontend",
+      "label": "Fragmentos recuperados",
+      "sublabel": "Gradio: score, video, tiempos y texto (primero)",
+      "pos": [970, 185],
+      "size": [220, 82]
+    },
+    {
+      "id": "message_builder",
+      "type": "backend",
+      "label": "build_context / build_messages",
+      "sublabel": "prepara texto legible para el prompt",
+      "pos": [970, 405],
+      "size": [220, 82]
+    },
+    {
+      "id": "llm",
+      "type": "cloud",
+      "label": "LLM configurado",
+      "sublabel": "recibe mensajes y genera respuesta en streaming",
+      "pos": [720, 405],
+      "size": [210, 82]
+    },
+    {
+      "id": "gradio_answer",
+      "type": "frontend",
+      "label": "Gradio · respuesta",
+      "sublabel": "muestra texto acumulado y métricas de generación",
+      "pos": [470, 405],
+      "size": [210, 82]
+    }
+  ],
+  "connections": [
+    {"id": "question-to-gradio", "from": "user", "to": "gradio_question", "label": "pregunta", "variant": "emphasis"},
+    {"id": "gradio-embed", "from": "gradio_question", "to": "question_embed", "label": "embedding", "variant": "default"},
+    {"id": "embed-search", "from": "question_embed", "to": "vector_store", "label": "vector", "variant": "emphasis"},
+    {"id": "search-hits", "from": "vector_store", "to": "hits_panel", "variant": "emphasis"},
+    {"id": "hits-to-messages", "from": "hits_panel", "to": "message_builder", "label": "texto recuperado", "variant": "default", "fromSide": "bottom", "toSide": "top"},
+    {"id": "messages-to-llm", "from": "message_builder", "to": "llm", "variant": "emphasis"},
+    {"id": "stream-to-gradio", "from": "llm", "to": "gradio_answer", "variant": "emphasis"},
+    {"id": "no-rag-bypass", "from": "gradio_question", "to": "message_builder", "variant": "dashed", "fromSide": "bottom", "toSide": "left"}
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Búsqueda vectorial",
+      "items": [
+        "El embedding representa la pregunta y se usa para buscar; los embeddings almacenados no se convierten de vuelta a texto.",
+        "Qdrant compara con similitud coseno y devuelve los puntos más similares hasta TOP_K (por defecto 4). Cada resultado trae score y payload: texto, video, start y end.",
+        "VECTOR_STORE=numpy selecciona NumpyStore: normaliza los vectores y ordena por producto punto, equivalente a coseno.",
+        "En el entorno del ponente, Qdrant corre en Docker; el embedding usa el proveedor compatible con OpenAI configurado (bge-m3 vía Ollama por defecto, Ollama nativo en el Mac)."
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "Qué contexto recibe el LLM",
+      "items": [
+        "SYSTEM_RAG pide responder solo con los fragmentos, citar afirmaciones como [1], [2] y decir que el video no lo menciona si no hay evidencia suficiente.",
+        "build_context etiqueta el texto con [n], video y tiempos; build_messages envía esas instrucciones y la pregunta junto con el texto recuperado.",
+        "El prompt recibe texto legible, no los vectores de los chunks. El orden de la app es mostrar los resultados recuperados antes de iniciar la generación.",
+        "Las citas conservan video y tiempos y pueden conectarse al flujo de reproducción; ese flujo no se detalla aquí."
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "Streaming y métricas en Gradio",
+      "items": [
+        "La app mide recuperación alrededor de rag.retrieve y muestra duración y cantidad de fragmentos.",
+        "Mide generación alrededor de rag.answer hasta completar el stream. Si el proveedor informa completion_tokens, calcula tokens/segundo como promedio incluyendo la espera inicial.",
+        "La comparación SIN RAG es opcional: build_messages usa SYSTEM_SIN_RAG y envía solo la pregunta al modelo, sin recuperar fragmentos."
+      ]
+    }
+  ]
+}

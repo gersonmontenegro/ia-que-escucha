@@ -1,0 +1,54 @@
+# Servicios del sistema.
+#
+# En el Mac, Ollama corre NATIVO (fuera de Docker) porque Docker en macOS no
+# accede a la GPU: un modelo de 27B en CPU dentro de un contenedor sería
+# inutilizable en vivo. Los contenedores lo alcanzan en host.docker.internal.
+#
+# En Linux con GPU NVIDIA se puede levantar Ollama también en Docker:
+#     docker compose --profile ollama up -d
+# y poner en .env:  LLM_BASE_URL=http://ollama:11434/v1  y  EMBED_BASE_URL=http://ollama:11434/v1
+
+services:
+  qdrant:
+    image: qdrant/qdrant:latest   # fija una versión (p. ej. v1.x.y) antes de la charla
+    ports:
+      - "6333:6333"               # API REST y panel web: http://localhost:6333/dashboard
+    volumes:
+      - qdrant_data:/qdrant/storage
+    restart: unless-stopped
+
+  app:
+    build: .
+    ports:
+      - "7860:7860"
+    env_file: .env
+    environment:
+      QDRANT_URL: http://qdrant:6333
+    volumes:
+      - ./data:/app/data          # videos, transcripciones e índice NumPy
+      - hf_cache:/root/.cache/huggingface   # modelos de Whisper descargados
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      - qdrant
+    restart: unless-stopped
+
+  ollama:
+    image: ollama/ollama:latest
+    profiles: ["ollama"]
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+
+volumes:
+  qdrant_data:
+  hf_cache:
+  ollama_data:

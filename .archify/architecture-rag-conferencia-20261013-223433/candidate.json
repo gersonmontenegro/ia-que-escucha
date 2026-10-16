@@ -1,0 +1,126 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "RAG sobre video: de la pregunta al minuto citado",
+    "locale": "es",
+    "output": ".archify/architecture-rag-conferencia-20261013-223433/arquitectura-rag.html",
+    "quality_profile": "showcase"
+  },
+  "components": [
+    {
+      "id": "audience",
+      "type": "external",
+      "label": "Ponente / estudiante",
+      "sublabel": "pregunta por el video",
+      "pos": [40, 180],
+      "size": [145, 70]
+    },
+    {
+      "id": "gradio",
+      "type": "frontend",
+      "label": "App Gradio",
+      "sublabel": "ingesta · pregunta · reproductor",
+      "pos": [260, 180],
+      "size": [175, 80]
+    },
+    {
+      "id": "rag",
+      "type": "backend",
+      "label": "Orquestador RAG",
+      "sublabel": "métodos ingest · retrieve · answer",
+      "pos": [565, 180],
+      "size": [175, 80]
+    },
+    {
+      "id": "video",
+      "type": "database",
+      "label": "Video MP4",
+      "sublabel": "data/videos/",
+      "pos": [40, 480],
+      "size": [145, 68]
+    },
+    {
+      "id": "whisper",
+      "type": "backend",
+      "label": "Whisper",
+      "sublabel": "faster-whisper · MLX · API",
+      "pos": [260, 480],
+      "size": [170, 78]
+    },
+    {
+      "id": "transcript",
+      "type": "database",
+      "label": "Transcripción en caché",
+      "sublabel": "JSON · segmentos con tiempos",
+      "pos": [560, 480],
+      "size": [190, 78]
+    },
+    {
+      "id": "chunking",
+      "type": "backend",
+      "label": "Chunking",
+      "sublabel": "agrupa segmentos y conserva tiempos",
+      "pos": [805, 180],
+      "size": [190, 78]
+    },
+    {
+      "id": "embedder",
+      "type": "backend",
+      "label": "Embedder",
+      "sublabel": "cliente compatible con OpenAI",
+      "pos": [1045, 180],
+      "size": [175, 78]
+    },
+    {
+      "id": "ollama",
+      "type": "backend",
+      "label": "Ollama nativo",
+      "sublabel": "bge-m3 · Qwen3.8:27b-mlx",
+      "pos": [1045, 480],
+      "size": [175, 78]
+    },
+    {
+      "id": "qdrant",
+      "type": "database",
+      "label": "Qdrant",
+      "sublabel": "vectores + texto + tiempos · top-k",
+      "pos": [805, 480],
+      "size": [190, 78]
+    }
+  ],
+  "boundaries": [],
+  "connections": [
+    { "id": "person-ui", "from": "audience", "to": "gradio", "label": "pregunta", "variant": "emphasis" },
+    { "id": "ui-rag", "from": "gradio", "to": "rag", "label": "ingesta · consulta" },
+    { "id": "rag-ui", "from": "rag", "to": "gradio", "label": "respuesta + citas" },
+    { "id": "video-whisper", "from": "video", "to": "whisper", "label": "MP4 / audio" },
+    { "id": "rag-whisper", "from": "rag", "to": "whisper", "label": "transcribe si no hay caché", "fromSide": "bottom", "toSide": "top" },
+    { "id": "whisper-cache", "from": "whisper", "to": "transcript", "label": "segmentos JSON" },
+    { "id": "rag-cache", "from": "rag", "to": "transcript", "label": "lee caché", "fromSide": "bottom", "toSide": "top" },
+    { "id": "rag-chunks", "from": "rag", "to": "chunking" },
+    { "id": "chunk-embed", "from": "chunking", "to": "embedder" },
+    { "id": "embed-ollama", "from": "embedder", "to": "ollama", "label": "embeddings · bge-m3", "fromSide": "bottom", "toSide": "top" },
+    { "id": "rag-qdrant", "from": "rag", "to": "qdrant", "label": "upsert / top-k", "fromSide": "bottom", "toSide": "top" },
+    { "id": "qdrant-rag", "from": "qdrant", "to": "rag", "label": "fragmentos + tiempos", "fromSide": "left", "toSide": "bottom" },
+    { "id": "rag-ollama", "from": "rag", "to": "ollama", "label": "prompt + Qwen", "fromSide": "bottom", "toSide": "left" },
+    { "id": "ollama-rag", "from": "ollama", "to": "rag", "label": "respuesta en streaming", "fromSide": "top", "toSide": "bottom" }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Ingesta",
+      "items": ["MP4 → Whisper → segmentos con tiempo", "Segmentos → chunks → embeddings → Qdrant"]
+    },
+    {
+      "dot": "emerald",
+      "title": "Consulta",
+      "items": ["Pregunta → embedding → búsqueda top-k", "Qwen recibe fragmentos y devuelve respuesta con citas"]
+    },
+    {
+      "dot": "amber",
+      "title": "Despliegue local",
+      "items": ["Gradio y Qdrant corren en Docker", "Ollama corre nativo en el Mac"]
+    }
+  ]
+}

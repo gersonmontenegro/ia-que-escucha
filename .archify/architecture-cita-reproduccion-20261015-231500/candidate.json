@@ -1,0 +1,96 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "De la cita [n] al instante del video",
+    "locale": "es",
+    "output": ".archify/architecture-cita-reproduccion-20261015-231500/cita-reproduccion.html",
+    "quality_profile": "showcase"
+  },
+  "components": [
+    {
+      "id": "query_inputs",
+      "type": "external",
+      "label": "Datos de la consulta",
+      "sublabel": "respuesta [n] + hits {texto, video, tiempos}",
+      "pos": [40, 60],
+      "size": [190, 78]
+    },
+    {
+      "id": "citation_resolver",
+      "type": "backend",
+      "label": "citation_choices",
+      "sublabel": "extrae [n] y lo resuelve contra hits[n−1]",
+      "pos": [280, 60],
+      "size": [190, 78]
+    },
+    {
+      "id": "citation_radio",
+      "type": "frontend",
+      "label": "Citas en Gradio",
+      "sublabel": "[n] · tiempo inicial · nombre del video",
+      "pos": [520, 60],
+      "size": [190, 78]
+    },
+    {
+      "id": "user_select",
+      "type": "external",
+      "label": "Usuario",
+      "sublabel": "selecciona una cita",
+      "pos": [760, 60],
+      "size": [145, 72]
+    },
+    {
+      "id": "jump_player_html",
+      "type": "backend",
+      "label": "jump_to → player_html",
+      "sublabel": "hits[n−1] → ruta del video + #t=start",
+      "pos": [950, 60],
+      "size": [210, 78]
+    },
+    {
+      "id": "gradio_file",
+      "type": "backend",
+      "label": "Archivo servido por Gradio",
+      "sublabel": "data/videos/ vía /gradio_api/file=…",
+      "pos": [1200, 60],
+      "size": [205, 78]
+    },
+    {
+      "id": "browser_player",
+      "type": "frontend",
+      "label": "Navegador · reproductor",
+      "sublabel": "carga el video y salta al segundo indicado",
+      "pos": [1200, 260],
+      "size": [205, 78]
+    }
+  ],
+  "connections": [
+    {"id": "inputs-to-resolver", "from": "query_inputs", "to": "citation_resolver", "variant": "default"},
+    {"id": "choices-to-radio", "from": "citation_resolver", "to": "citation_radio", "variant": "emphasis"},
+    {"id": "radio-to-user", "from": "citation_radio", "to": "user_select", "variant": "default"},
+    {"id": "select-citation", "from": "user_select", "to": "jump_player_html", "variant": "emphasis"},
+    {"id": "serve-video", "from": "jump_player_html", "to": "gradio_file", "variant": "default"},
+    {"id": "load-player", "from": "gradio_file", "to": "browser_player", "label": "carga el video", "variant": "emphasis", "fromSide": "bottom", "toSide": "top"}
+  ],
+  "cards": [
+    {
+      "dot": "violet",
+      "title": "Qué significa [n]",
+      "items": [
+        "[n] identifica el n-ésimo hit de la lista recuperada; no es un timestamp ni un tiempo inventado por el LLM.",
+        "cited_numbers extrae los números únicos en orden. citation_choices ignora índices fuera del rango de hits; si no queda ninguno, ofrece todos los hits.",
+        "Al construir cada opción, app.py toma video y start del hit correspondiente. Esos valores son metadatos del chunk; start se muestra formateado como tiempo inicial."
+      ]
+    },
+    {
+      "dot": "cyan",
+      "title": "Resolución y salto",
+      "items": [
+        "La opción de Gradio conserva n como valor. Al seleccionarla, cites.change llama jump_to(n, hits), que obtiene hits[n−1].",
+        "El JavaScript previo pausa el reproductor anterior, quita su src y lo reinicia; jump_to devuelve un reproductor nuevo con autoplay.",
+        "player_html resuelve cfg.videos_dir / video y forma /gradio_api/file=<ruta>#t=<int(start)>; Gradio permite servir cfg.videos_dir mediante allowed_paths."
+      ]
+    }
+  ]
+}

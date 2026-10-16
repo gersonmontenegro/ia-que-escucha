@@ -1,0 +1,9 @@
+gradio==6.30.0
+openai==3.28.0
+qdrant-client==1.19.1
+faster-whisper==1.2.1
+# faster-whisper 1.2.1 usa av.open(metadata_errors=...), retirado en PyAV 19.
+av<19
+numpy>=2.0
+python-dotenv>=1.0
+pytest>=8.0
