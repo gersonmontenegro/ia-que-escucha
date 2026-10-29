@@ -10,6 +10,10 @@ la descripción del proyecto, leer primero [`AGENTS.md`](../AGENTS.md).
 - El archivo de demo es `data/videos/video.mp4` (10 min 16 s). La transcripción
   MLX está en `data/transcripts/video.json`; se indexó en Qdrant como 19 chunks.
   Si la colección está vacía, reindexar con `make ingest VIDEO=video.mp4`.
+- La app también admite audio (`.mp3`, `.wav`, `.m4a`, `.flac`, `.ogg`, `.aac`,
+  `.wma`); `data/videos/floristeria.mp3` aparece en el desplegable de ingesta.
+  Puede indexarse con `make ingest VIDEO=floristeria.mp3` y las citas abren un
+  reproductor de audio en el instante correspondiente.
 - `.env` local selecciona `qwen3.8:27b-mlx`, `bge-m3`, Qdrant y
   `LLM_EXTRA_BODY={"reasoning_effort":"none"}`. `.env` está ignorado por Git;
   comprobar los valores locales antes de cambiar proveedores.
@@ -25,10 +29,10 @@ la descripción del proyecto, leer primero [`AGENTS.md`](../AGENTS.md).
 - La ingesta muestra tiempo de extracción de chunks. La consulta muestra tiempo
   de recuperación, tiempo de respuesta, tokens y tokens/s promedio; el promedio
   incluye la espera inicial.
-- El reproductor detiene/descarga el video anterior al saltar a otra cita y crea
+- El reproductor detiene/descarga el medio anterior al saltar a otra cita y crea
   uno nuevo en el instante citado. **Queda por confirmar visualmente en Chrome**
-  que el video se reproduce y que nunca se solapan audios; si falla, usar el plan
-  B de `docs/guion.md`.
+  que video y audio saltan al tiempo correcto y que nunca se solapan reproducciones;
+  si falla, usar el plan B de `docs/guion.md`.
 
 ## Charla
 

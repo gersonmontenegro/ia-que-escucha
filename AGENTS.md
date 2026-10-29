@@ -12,9 +12,11 @@ transmisión en vivo). El ponente ejecuta la demo **en su propio Mac**, proyecta
 en pantalla; el público no programa durante la charla. Después, los asistentes
 pueden clonar el repo y resolver `docs/retos.md`.
 
-El sistema es un **RAG sobre video**: Whisper transcribe un video (mp4 de ~10 min,
-una noticia científica reciente, elegida para que el LLM no la conozca), se
-indexa, y las respuestas citan el minuto exacto con un reproductor que salta a él.
+El sistema es un **RAG sobre audio y video**: Whisper transcribe archivos de audio
+(por ejemplo, una conversación en MP3) o videos (la demo original usa un MP4 de
+~10 min con una noticia científica reciente, elegida para que el LLM no la
+conozca), se indexan, y las respuestas citan el minuto exacto con un reproductor
+que salta a él.
 
 ## Hardware y entorno del ponente
 
@@ -37,7 +39,8 @@ indexa, y las respuestas citan el minuto exacto con un reproductor que salta a �
    explicar) y `QdrantStore` (producción). Se elige con `VECTOR_STORE`.
 4. **Tres motores de Whisper:** `faster-whisper` (CPU, Docker), `mlx` (nativo en el
    Mac, vía `make transcribe-mac`) y `openai` (API). Las transcripciones se guardan
-   en caché en `data/transcripts/<video>.json`; la app las reutiliza.
+   en caché en `data/transcripts/<fuente>.json`; la app las reutiliza. Audio y
+   video se eligen desde el mismo desplegable de ingesta.
 5. **Dockerizar todo lo posible**, excepto Ollama y MLX en el Mac.
 6. **Idioma:** código con nombres en inglés; comentarios, docstrings, interfaz y
    documentación en **español**.
@@ -48,7 +51,7 @@ indexa, y las respuestas citan el minuto exacto con un reproductor que salta a �
 
 ```
 rag/config.py       configuración desde .env
-rag/transcribe.py   etapa 1: video -> segmentos {start, end, text}
+rag/transcribe.py   etapa 1: audio/video -> segmentos {start, end, text}
 rag/chunking.py     etapa 2: segmentos -> chunks con tiempos
 rag/embeddings.py   etapa 3: texto -> vectores (API OpenAI-compatible)
 rag/store.py        etapa 4: NumpyStore y QdrantStore
@@ -66,8 +69,8 @@ make help        # lista de atajos
 make up          # levanta Qdrant + app (http://localhost:7860)
 make check       # verifica Ollama, Qdrant y app
 make test        # pruebas dentro del contenedor
-make transcribe-mac VIDEO=archivo.mp4   # Whisper con MLX nativo
-python -m rag.pipeline ingest data/videos/x.mp4
+make transcribe-mac VIDEO=archivo.mp4   # Whisper con MLX nativo (también MP3)
+python -m rag.pipeline ingest data/videos/floristeria.mp3
 python -m rag.pipeline ask "pregunta" [--no-rag]
 ```
 

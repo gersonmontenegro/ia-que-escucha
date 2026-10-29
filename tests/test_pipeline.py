@@ -73,14 +73,15 @@ def test_chunking_sin_solapamiento_no_repite():
 
 
 @pytest.mark.parametrize("store_cls", ["numpy", "qdrant"])
-def test_ingesta_y_busqueda(cfg, store_cls):
+@pytest.mark.parametrize("source_name", ["noticia.mp4", "conversacion.mp3"])
+def test_ingesta_y_busqueda(cfg, store_cls, source_name):
     cfg.vector_store = store_cls
     cfg.qdrant_url = ":memory:"
     store = NumpyStore(cfg) if store_cls == "numpy" else QdrantStore(cfg)
     rag = RAG(cfg, embedder=FakeEmbedder(), store=store, llm=FakeLLM())
 
-    video = cfg.videos_dir / "noticia.mp4"
-    (cfg.transcripts_dir / "noticia.json").write_text(
+    video = cfg.videos_dir / source_name
+    (cfg.transcripts_dir / f"{video.stem}.json").write_text(
         json.dumps({"video": video.name, "engine": "fake", "model": "x", "seconds": 1, "segments": SEGMENTS})
     )
     log = list(rag.ingest(video))
@@ -94,7 +95,7 @@ def test_ingesta_y_busqueda(cfg, store_cls):
 
     hits = rag.retrieve("¿Cuántos años vive la tortuga?")
     assert "tortuga" in hits[0]["text"].lower()
-    assert hits[0]["video"] == "noticia.mp4"
+    assert hits[0]["video"] == source_name
     assert hits[0]["score"] >= hits[-1]["score"]
 
     final = list(rag.answer("¿Cuántos años vive la tortuga?", hits))[-1]

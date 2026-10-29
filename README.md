@@ -1,13 +1,13 @@
 # 🎧 ¿Cómo enseñarle a una IA a escuchar?
 
-Un sistema **RAG sobre video**, escrito con código propio y simple, para entender
-cada pieza: le haces una pregunta a un video y te responde **citando el minuto
-exacto**, con un reproductor que salta a ese momento.
+Un sistema **RAG sobre audio y video**, escrito con código propio y simple, para
+entender cada pieza: le haces una pregunta a un archivo y te responde **citando
+el minuto exacto**, con un reproductor que salta a ese momento.
 
 ```mermaid
 flowchart LR
     subgraph Ingesta
-        V[🎬 Video] --> W[Whisper<br/>transcripción]
+        V[🎧 Audio o video] --> W[Whisper<br/>transcripción]
         W --> S[Segmentos<br/>con tiempos]
         S --> C[Chunking]
         C --> E1[Embeddings<br/>bge-m3]
@@ -48,11 +48,15 @@ ollama pull <tu-modelo>           # y ajusta LLM_MODEL en .env
 make up                           # Qdrant + app en Docker
 ```
 
-1. Copia tu video a `data/videos/`.
-2. Abre http://localhost:7860, pestaña **1 · Ingesta**, elige el video y pulsa
+1. Copia tu audio (por ejemplo MP3) o video a `data/videos/`.
+2. Abre http://localhost:7860, pestaña **1 · Ingesta**, elige el archivo y pulsa
    *Transcribir e indexar*.
 3. En **2 · Preguntar**, haz tu pregunta. Activa *Comparar con respuesta SIN RAG*
-   para ver qué responde el modelo sin el video.
+   para ver qué responde el modelo sin el contexto de la transcripción.
+
+El archivo de conversación incluido `data/videos/floristeria.mp3` aparece en el
+desplegable y se procesa igual que un video. También puedes indexarlo desde la
+terminal con `make ingest VIDEO=floristeria.mp3`.
 
 `make help` lista todos los atajos. `make check` verifica que todo responda.
 
@@ -64,6 +68,8 @@ Dentro de Docker, Whisper corre en CPU. Para usar la GPU del Mac:
 brew install ffmpeg
 make mac-setup                          # entorno nativo con mlx-whisper
 make transcribe-mac VIDEO=noticia.mp4   # deja la transcripción en data/transcripts/
+# También acepta audio, por ejemplo:
+make transcribe-mac VIDEO=floristeria.mp3
 ```
 
 La app detecta la transcripción en caché y salta directo al chunking.
@@ -86,7 +92,7 @@ los vectores, filtra por metadatos y escala a millones de chunks.
 
 | Archivo | Etapa |
 |---|---|
-| `rag/transcribe.py` | 1 · Video → segmentos con tiempos (Whisper) |
+| `rag/transcribe.py` | 1 · Audio/video → segmentos con tiempos (Whisper) |
 | `rag/chunking.py` | 2 · Segmentos → chunks |
 | `rag/embeddings.py` | 3 · Texto → vectores |
 | `rag/store.py` | 4 · Guardar y buscar vectores (NumPy y Qdrant) |

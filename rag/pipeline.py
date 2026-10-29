@@ -1,10 +1,10 @@
 """El pipeline completo, de punta a punta.
 
-    INGESTA:   video ─► Whisper ─► segmentos ─► chunks ─► embeddings ─► almacén
+    INGESTA:   audio/video ─► Whisper ─► segmentos ─► chunks ─► embeddings ─► almacén
     CONSULTA:  pregunta ─► embedding ─► búsqueda top-k ─► prompt ─► LLM ─► respuesta + citas
 
 Uso por línea de comandos:
-    python -m rag.pipeline ingest data/videos/noticia.mp4
+    python -m rag.pipeline ingest data/videos/conversacion.mp3
     python -m rag.pipeline ask "¿Qué descubrieron?"
 """
 
@@ -68,10 +68,10 @@ class RAG:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="RAG sobre videos")
+    parser = argparse.ArgumentParser(description="RAG sobre audio y video")
     sub = parser.add_subparsers(dest="cmd", required=True)
-    p_ing = sub.add_parser("ingest", help="Transcribir e indexar un video")
-    p_ing.add_argument("video", type=Path)
+    p_ing = sub.add_parser("ingest", help="Transcribir e indexar audio o video")
+    p_ing.add_argument("source", type=Path)
     p_ing.add_argument("--force", action="store_true", help="Ignorar la transcripción en caché")
     p_ask = sub.add_parser("ask", help="Hacer una pregunta")
     p_ask.add_argument("question")
@@ -80,7 +80,7 @@ def main() -> None:
 
     rag = RAG()
     if args.cmd == "ingest":
-        for msg in rag.ingest(args.video, args.force):
+        for msg in rag.ingest(args.source, args.force):
             print(msg)
     else:
         hits = None if args.no_rag else rag.retrieve(args.question)

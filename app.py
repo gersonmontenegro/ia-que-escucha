@@ -17,23 +17,32 @@ from rag.pipeline import RAG
 from rag.transcribe import format_ts, load_transcript
 
 VIDEO_EXT = {".mp4", ".mov", ".mkv", ".webm", ".m4v"}
+AUDIO_EXT = {".mp3", ".wav", ".m4a", ".flac", ".ogg", ".aac", ".wma"}
 
 cfg = load_config()
 rag = RAG(cfg)
 
 
 # ----------------------------------------------------------------- utilidades
-def list_videos() -> list[str]:
-    return sorted(p.name for p in cfg.videos_dir.iterdir() if p.suffix.lower() in VIDEO_EXT)
+def list_sources() -> list[str]:
+    return sorted(
+        p.name for p in cfg.videos_dir.iterdir()
+        if p.suffix.lower() in VIDEO_EXT | AUDIO_EXT
+    )
 
 
 def player_html(video: str | None, start: float = 0, autoplay: bool = False) -> str:
     if not video:
-        return "<div class='vacio'>Aquí aparecerá el video</div>"
+        return "<div class='vacio'>Aquí aparecerá el audio o video</div>"
     path = (cfg.videos_dir / video).resolve()
-    # #t=SEGUNDOS es un "media fragment": el navegador abre el video en ese instante
+    # #t=SEGUNDOS es un "media fragment": abre el medio en ese instante.
     src = f"/gradio_api/file={quote(str(path))}#t={int(start)}"
     auto = "autoplay" if autoplay else ""
+    if path.suffix.lower() in AUDIO_EXT:
+        return (
+            f"<audio id='rag-video-player' src='{src}' controls {auto} "
+            "preload='metadata' style='display:block;width:100%'></audio>"
+        )
     return (
         f"<video id='rag-video-player' src='{src}' controls playsinline {auto} "
         "preload='metadata' style='display:block;width:100%;aspect-ratio:16/9;"
@@ -74,7 +83,7 @@ def generation_note(seconds: float, llm) -> str:
 # ----------------------------------------------------------------- acciones
 def do_ingest(video: str, force: bool):
     if not video:
-        yield "Elige un video de data/videos/", None
+        yield "Elige un audio o video de data/videos/", None
         return
     log: list[str] = []
     for msg in rag.ingest(cfg.videos_dir / video, force):
@@ -160,13 +169,13 @@ CSS = """
 """
 
 with gr.Blocks(title="¿Cómo enseñarle a una IA a escuchar?") as demo:
-    gr.Markdown("# 🎧 ¿Cómo enseñarle a una IA a escuchar?\nRAG sobre video: Whisper → chunks → embeddings → búsqueda → LLM")
+    gr.Markdown("# 🎧 ¿Cómo enseñarle a una IA a escuchar?\nRAG sobre audio y video: Whisper → chunks → embeddings → búsqueda → LLM")
     with gr.Accordion("Configuración activa", open=False):
         gr.Markdown(config_md())
 
     with gr.Tab("1 · Ingesta"):
         with gr.Row():
-            video_dd = gr.Dropdown(choices=list_videos(), label="Video (data/videos/)", scale=3)
+            video_dd = gr.Dropdown(choices=list_sources(), label="Audio o video (data/videos/)", scale=3)
             refresh = gr.Button("🔄", scale=0, min_width=50)
             force = gr.Checkbox(label="Ignorar caché de transcripción", scale=1)
         ingest_btn = gr.Button("Transcribir e indexar", variant="primary")
@@ -193,7 +202,7 @@ with gr.Blocks(title="¿Cómo enseñarle a una IA a escuchar?") as demo:
                                  interactive=False, column_widths=["40px", "90px", "110px", "auto"])
 
     # eventos
-    refresh.click(lambda: gr.Dropdown(choices=list_videos()), outputs=video_dd)
+    refresh.click(lambda: gr.Dropdown(choices=list_sources()), outputs=video_dd)
     ingest_btn.click(do_ingest, [video_dd, force], [ingest_log, transcript])
     ask_outputs = [answer_md, no_rag_md, retrieved, hits_state, cites, player, retrieval_time]
     ask_btn.click(do_ask, [question, compare], ask_outputs, js=STOP_PLAYER_JS)

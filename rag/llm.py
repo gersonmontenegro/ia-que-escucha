@@ -13,11 +13,11 @@ from openai import OpenAI
 from .config import Config
 from .transcribe import format_ts
 
-SYSTEM_RAG = """Eres un asistente que responde preguntas sobre videos a partir de su transcripción.
+SYSTEM_RAG = """Eres un asistente que responde preguntas sobre audios o videos a partir de su transcripción.
 Reglas:
 - Responde SOLO con la información de los fragmentos que se te entregan.
 - Cita cada afirmación con el número del fragmento entre corchetes, por ejemplo [1] o [2][3].
-- Si los fragmentos no contienen la respuesta, di claramente que el video no lo menciona.
+- Si los fragmentos no contienen la respuesta, di claramente que el audio o video no lo menciona.
 - Responde en español, de forma breve y directa."""
 
 SYSTEM_SIN_RAG = """Eres un asistente útil. Responde en español, de forma breve y directa."""

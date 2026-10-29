@@ -1,4 +1,4 @@
-"""Etapa 1 · Transcripción: video -> lista de segmentos con marcas de tiempo.
+"""Etapa 1 · Transcripción: video o audio -> segmentos con marcas de tiempo.
 
 Cada segmento es un dict: {"start": 12.4, "end": 17.9, "text": "..."}.
 Las marcas de tiempo son lo que después nos permite citar "el minuto exacto".
@@ -9,7 +9,7 @@ Tres motores intercambiables (variable TRANSCRIBER):
   - openai         : API compatible con OpenAI (OpenAI, Groq, ...).
 
 Uso por línea de comandos (útil para transcribir nativo en el Mac con MLX):
-    python -m rag.transcribe data/videos/noticia.mp4 --engine mlx
+    python -m rag.transcribe data/videos/conversacion.mp3 --engine mlx
 """
 
 import argparse
@@ -41,7 +41,7 @@ def load_transcript(cfg: Config, video: Path) -> dict | None:
 
 
 def transcribe(cfg: Config, video: Path, engine: str | None = None) -> dict:
-    """Transcribe el video y guarda el resultado en data/transcripts/."""
+    """Transcribe un archivo de audio o video y guarda el resultado en caché."""
     engine = engine or cfg.transcriber
     t0 = time.time()
 
@@ -95,9 +95,11 @@ def _mlx(cfg: Config, video: Path) -> list[dict]:
 def _openai_api(cfg: Config, video: Path) -> list[dict]:
     from openai import OpenAI
 
-    # Las APIs limitan el tamaño del archivo (~25 MB): enviamos solo el audio,
-    # mono a 16 kHz, en lugar del video completo.
-    audio = extract_audio(video, cfg.transcripts_dir / f"{video.stem}.wav")
+    # Las APIs limitan el tamaño del archivo (~25 MB): enviamos directamente
+    # los archivos de audio y extraemos solo el audio de los videos.
+    audio = video if video.suffix.lower() in AUDIO_EXT else extract_audio(
+        video, cfg.transcripts_dir / f"{video.stem}.wav"
+    )
     client = OpenAI(base_url=cfg.transcribe_base_url, api_key=cfg.transcribe_api_key)
     with open(audio, "rb") as f:
         resp = client.audio.transcriptions.create(
@@ -135,14 +137,17 @@ def format_ts(seconds: float) -> str:
     return f"{h}:{m:02d}:{s:02d}" if h else f"{m:02d}:{s:02d}"
 
 
+AUDIO_EXT = {".mp3", ".wav", ".m4a", ".flac", ".ogg", ".aac", ".wma"}
+
+
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Transcribe un video con Whisper")
-    parser.add_argument("video", type=Path)
+    parser = argparse.ArgumentParser(description="Transcribe audio o video con Whisper")
+    parser.add_argument("source", type=Path)
     parser.add_argument("--engine", choices=["faster-whisper", "mlx", "openai"])
     args = parser.parse_args()
 
     cfg = load_config()
-    res = transcribe(cfg, args.video, args.engine)
+    res = transcribe(cfg, args.source, args.engine)
     print(f"{len(res['segments'])} segmentos en {res['seconds']} s con {res['engine']}")
     for seg in res["segments"][:5]:
         print(f"  [{format_ts(seg['start'])}] {seg['text']}")
