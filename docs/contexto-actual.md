@@ -21,8 +21,18 @@ la descripción del proyecto, leer primero [`AGENTS.md`](../AGENTS.md).
 
 ## Cambios recientes de código
 
-- `make test` usa `python -m pytest`; resultado de la última ejecución: 6 pruebas
-  aprobadas.
+- Flujo adaptativo de consulta implementado con LangGraph: recuperación vectorial,
+  reranking local (`cross-encoder/mmarco-mMiniLMv2-L12-H384-v1`), evaluación del
+  contexto con el LLM, reformulación y hasta 3 reintentos (4 búsquedas contando la inicial). Si no hay
+  contexto suficiente, devuelve `Eso no se dice en el video.`. El cross-encoder
+  carga bajo demanda; Docker conserva su caché en el volumen `hf_cache`.
+- Configuración: `RERANKER_MODEL` y `MAX_QUERY_RETRIES` (`.env.example`). Pruebas
+  del flujo inyectan reranker y LLM falsos, sin descargar el modelo.
+- El juez de contexto también propone la consulta reformulada en esa misma llamada
+  (incluida corrección de erratas como `jupite` → `Júpiter`), evitando una llamada
+  LLM independiente por reintento. La UI expone tiempos acumulados de reranking,
+  evaluación y generación para diagnosticar latencia.
+- `make test` usa `python -m pytest`; en el flujo actual hay 12 pruebas aprobadas.
 - `requirements.txt` fija `av<19`, compatible con faster-whisper 1.2.1; PyAV 19
   había retirado el argumento que usaba esa versión.
 - `make mac-setup` usa Python 3.12 para el entorno MLX.
@@ -53,6 +63,9 @@ la descripción del proyecto, leer primero [`AGENTS.md`](../AGENTS.md).
 - Probar en Chrome el salto al tiempo citado y la reproducción visual del video.
 - Preparar 5–6 preguntas de demo a partir de toda la transcripción.
 - Fijar la versión de `qdrant/qdrant` antes de la charla.
+- Medir el tiempo de carga inicial y el reranking del cross-encoder en el Mac; por
+  defecto corre dentro del contenedor en CPU. Validar calidad de ranking con
+  preguntas de la demo en español.
 
 ## Instrucción útil para la siguiente sesión
 

@@ -1,0 +1,575 @@
+{
+  "schemaVersion": 1,
+  "ok": false,
+  "command": "finalize",
+  "status": "fail",
+  "type": "architecture",
+  "quality": "showcase",
+  "startedAt": "2026-10-29T18:21:25.633Z",
+  "specification": {
+    "path": "/Users/grs/Documents/repos/aunar/ia-que-escucha/.archify/architecture-adaptive-rag-20261029-150000/candidate.json",
+    "sha256": "0b6c86af5a36e2390dc6f01970cde5c9389913262dad94c68ae86384f733a1e0",
+    "bytes": 5443
+  },
+  "artifact": {
+    "path": "/Users/grs/Documents/repos/aunar/ia-que-escucha/.archify/architecture-adaptive-rag-20261029-150000/consulta-rag-adaptativa.html",
+    "sha256": "987bdd8e5d255bc3221add5ccf779f72cf27caa471e9f2b331aa1c25f43ffa2e",
+    "bytes": 842407
+  },
+  "stages": {
+    "validate": {
+      "status": "fail",
+      "exitCode": 1,
+      "durationMs": null,
+      "command": [
+        "/Users/grs/.nvm/versions/node/v24.19.0/bin/node",
+        "/Users/grs/Documents/repos/aunar/ia-que-escucha/.agents/skills/archify/bin/archify.mjs",
+        "deliver",
+        "architecture",
+        "/Users/grs/Documents/repos/aunar/ia-que-escucha/.archify/architecture-adaptive-rag-20261029-150000/candidate.json",
+        "/Users/grs/Documents/repos/aunar/ia-que-escucha/.archify/architecture-adaptive-rag-20261029-150000/consulta-rag-adaptativa.html",
+        "--quality",
+        "showcase",
+        "--json"
+      ],
+      "receipt": {
+        "schemaVersion": 1,
+        "ok": false,
+        "command": "deliver",
+        "receiptId": "d4e2d66e-678e-4811-8513-efc48e0f93e6",
+        "stage": "render",
+        "type": "architecture",
+        "input": "/Users/grs/Documents/repos/aunar/ia-que-escucha/.archify/architecture-adaptive-rag-20261029-150000/candidate.json",
+        "output": "/Users/grs/Documents/repos/aunar/ia-que-escucha/.archify/architecture-adaptive-rag-20261029-150000/consulta-rag-adaptativa.html",
+        "error": "Architecture layout validation failed:\n- Label \"chunks reordenados\" has only 45px between \"reranker\" and \"evaluar\"; it needs at least 113px to stay beside its route — increase that clear gap or place the connected nodes on another readable row, preserving the label.\n- [composition/label-route-clearance] showcase architecture label \"chunks reordenados\" on connections[7] id \"ordenar-contexto\" \"reranker\" -> \"evaluar\" label \"chunks reordenados\" is 0px from connections[6] id \"candidatos-rerank\" \"recuperar\" -> \"reranker\" label \"fragmentos candidatos\" segment 2 [1129, 244] -> [1129, 171] (label rect [1079, 165, 96, 14]; minimum 4px) — adjust labelAt, labelDx, labelDy, or labelSegment; otherwise adjust the other relationship route/via/channel.\n- [composition/label-route-clearance] showcase architecture label \"chunks reordenados\" on connections[7] id \"ordenar-contexto\" \"reranker\" -> \"evaluar\" label \"chunks reordenados\" is 0px from connections[15] id \"answer-al-rag\" \"respuesta\" -> \"rag\" label \"respuesta + citas [n]\" segment 1 [1125, 328] -> [1125, 134] (label rect [1079, 165, 96, 14]; minimum 4px) — adjust labelAt, labelDx, labelDy, or labelSegment; otherwise adjust the other relationship route/via/channel.\n- [composition/label-route-clearance] showcase architecture label \"sí · generar con citas\" on connections[10] id \"contexto-suficiente\" \"evaluar\" -> \"respuesta\" label \"sí · generar con citas\" is 0px from connections[8] id \"juez-llm\" \"evaluar\" -> \"llm_api\" label \"calificar + proponer\" segment 0 [1209.5, 228] -> [1209.5, 289] (label rect [1199, 244, 116, 14]; minimum 4px) — adjust labelAt, labelDx, labelDy, or labelSegment; otherwise adjust the other relationship route/via/channel.\n- [composition/label-route-clearance] showcase architecture label \"sí · generar con citas\" on connections[10] id \"contexto-suficiente\" \"evaluar\" -> \"respuesta\" label \"sí · generar con citas\" is 0px from connections[13] id \"sin-contexto\" \"evaluar\" -> \"fallback\" label \"sin sugerencia o 3 reintentos\" segment 0 [1265.5, 228] -> [1265.5, 297] (label rect [1199, 244, 116, 14]; minimum 4px) — adjust labelAt, labelDx, labelDy, or labelSegment; otherwise adjust the other relationship route/via/channel.",
+        "diagnostics": [
+          {
+            "code": "composition/label-route-clearance",
+            "severity": "error",
+            "message": "[composition/label-route-clearance] showcase architecture label \"chunks reordenados\" on connections[7] id \"ordenar-contexto\" \"reranker\" -> \"evaluar\" label \"chunks reordenados\" is 0px from connections[6] id \"candidatos-rerank\" \"recuperar\" -> \"reranker\" label \"fragmentos candidatos\" segment 2 [1129, 244] -> [1129, 171] (label rect [1079, 165, 96, 14]; minimum 4px) — adjust labelAt, labelDx, labelDy, or labelSegment; otherwise adjust the other relationship route/via/channel.",
+            "subject": {
+              "diagramType": "architecture",
+              "collection": "connections",
+              "index": 7,
+              "id": "ordenar-contexto",
+              "from": "reranker",
+              "to": "evaluar"
+            },
+            "evidence": {
+              "label": "chunks reordenados",
+              "otherRelationship": {
+                "diagramType": "architecture",
+                "collection": "connections",
+                "index": 6,
+                "id": "candidatos-rerank",
+                "from": "recuperar",
+                "to": "reranker"
+              },
+              "segmentIndex": 2,
+              "clearancePx": 0,
+              "minimumPx": 4,
+              "labelRect": {
+                "relation": {
+                  "id": "ordenar-contexto",
+                  "from": "reranker",
+                  "to": "evaluar",
+                  "label": "chunks reordenados"
+                },
+                "relationIndex": 7,
+                "label": "chunks reordenados",
+                "x": 1079.3,
+                "y": 165,
+                "width": 96.39999999999999,
+                "height": 14,
+                "lx": 1127.5,
+                "ly": 175
+              },
+              "from": [
+                1129,
+                244
+              ],
+              "to": [
+                1129,
+                171
+              ]
+            },
+            "supportedFixes": [
+              "adjust labelAt, labelDx, labelDy, or labelSegment; otherwise adjust the other relationship route/via/channel"
+            ]
+          },
+          {
+            "code": "composition/label-route-clearance",
+            "severity": "error",
+            "message": "[composition/label-route-clearance] showcase architecture label \"chunks reordenados\" on connections[7] id \"ordenar-contexto\" \"reranker\" -> \"evaluar\" label \"chunks reordenados\" is 0px from connections[15] id \"answer-al-rag\" \"respuesta\" -> \"rag\" label \"respuesta + citas [n]\" segment 1 [1125, 328] -> [1125, 134] (label rect [1079, 165, 96, 14]; minimum 4px) — adjust labelAt, labelDx, labelDy, or labelSegment; otherwise adjust the other relationship route/via/channel.",
+            "subject": {
+              "diagramType": "architecture",
+              "collection": "connections",
+              "index": 7,
+              "id": "ordenar-contexto",
+              "from": "reranker",
+              "to": "evaluar"
+            },
+            "evidence": {
+              "label": "chunks reordenados",
+              "otherRelationship": {
+                "diagramType": "architecture",
+                "collection": "connections",
+                "index": 15,
+                "id": "answer-al-rag",
+                "from": "respuesta",
+                "to": "rag"
+              },
+              "segmentIndex": 1,
+              "clearancePx": 0,
+              "minimumPx": 4,
+              "labelRect": {
+                "relation": {
+                  "id": "ordenar-contexto",
+                  "from": "reranker",
+                  "to": "evaluar",
+                  "label": "chunks reordenados"
+                },
+                "relationIndex": 7,
+                "label": "chunks reordenados",
+                "x": 1079.3,
+                "y": 165,
+                "width": 96.39999999999999,
+                "height": 14,
+                "lx": 1127.5,
+                "ly": 175
+              },
+              "from": [
+                1125,
+                328
+              ],
+              "to": [
+                1125,
+                134
+              ]
+            },
+            "supportedFixes": [
+              "adjust labelAt, labelDx, labelDy, or labelSegment; otherwise adjust the other relationship route/via/channel"
+            ]
+          },
+          {
+            "code": "composition/label-route-clearance",
+            "severity": "error",
+            "message": "[composition/label-route-clearance] showcase architecture label \"sí · generar con citas\" on connections[10] id \"contexto-suficiente\" \"evaluar\" -> \"respuesta\" label \"sí · generar con citas\" is 0px from connections[8] id \"juez-llm\" \"evaluar\" -> \"llm_api\" label \"calificar + proponer\" segment 0 [1209.5, 228] -> [1209.5, 289] (label rect [1199, 244, 116, 14]; minimum 4px) — adjust labelAt, labelDx, labelDy, or labelSegment; otherwise adjust the other relationship route/via/channel.",
+            "subject": {
+              "diagramType": "architecture",
+              "collection": "connections",
+              "index": 10,
+              "id": "contexto-suficiente",
+              "from": "evaluar",
+              "to": "respuesta"
+            },
+            "evidence": {
+              "label": "sí · generar con citas",
+              "otherRelationship": {
+                "diagramType": "architecture",
+                "collection": "connections",
+                "index": 8,
+                "id": "juez-llm",
+                "from": "evaluar",
+                "to": "llm_api"
+              },
+              "segmentIndex": 0,
+              "clearancePx": 0,
+              "minimumPx": 4,
+              "labelRect": {
+                "relation": {
+                  "id": "contexto-suficiente",
+                  "from": "evaluar",
+                  "to": "respuesta",
+                  "label": "sí · generar con citas",
+                  "variant": "emphasis"
+                },
+                "relationIndex": 10,
+                "label": "sí · generar con citas",
+                "x": 1198.7250000000001,
+                "y": 244,
+                "width": 115.6,
+                "height": 14,
+                "lx": 1256.525,
+                "ly": 254
+              },
+              "from": [
+                1209.5,
+                228
+              ],
+              "to": [
+                1209.5,
+                289
+              ]
+            },
+            "supportedFixes": [
+              "adjust labelAt, labelDx, labelDy, or labelSegment; otherwise adjust the other relationship route/via/channel"
+            ]
+          },
+          {
+            "code": "composition/label-route-clearance",
+            "severity": "error",
+            "message": "[composition/label-route-clearance] showcase architecture label \"sí · generar con citas\" on connections[10] id \"contexto-suficiente\" \"evaluar\" -> \"respuesta\" label \"sí · generar con citas\" is 0px from connections[13] id \"sin-contexto\" \"evaluar\" -> \"fallback\" label \"sin sugerencia o 3 reintentos\" segment 0 [1265.5, 228] -> [1265.5, 297] (label rect [1199, 244, 116, 14]; minimum 4px) — adjust labelAt, labelDx, labelDy, or labelSegment; otherwise adjust the other relationship route/via/channel.",
+            "subject": {
+              "diagramType": "architecture",
+              "collection": "connections",
+              "index": 10,
+              "id": "contexto-suficiente",
+              "from": "evaluar",
+              "to": "respuesta"
+            },
+            "evidence": {
+              "label": "sí · generar con citas",
+              "otherRelationship": {
+                "diagramType": "architecture",
+                "collection": "connections",
+                "index": 13,
+                "id": "sin-contexto",
+                "from": "evaluar",
+                "to": "fallback"
+              },
+              "segmentIndex": 0,
+              "clearancePx": 0,
+              "minimumPx": 4,
+              "labelRect": {
+                "relation": {
+                  "id": "contexto-suficiente",
+                  "from": "evaluar",
+                  "to": "respuesta",
+                  "label": "sí · generar con citas",
+                  "variant": "emphasis"
+                },
+                "relationIndex": 10,
+                "label": "sí · generar con citas",
+                "x": 1198.7250000000001,
+                "y": 244,
+                "width": 115.6,
+                "height": 14,
+                "lx": 1256.525,
+                "ly": 254
+              },
+              "from": [
+                1265.5,
+                228
+              ],
+              "to": [
+                1265.5,
+                297
+              ]
+            },
+            "supportedFixes": [
+              "adjust labelAt, labelDx, labelDy, or labelSegment; otherwise adjust the other relationship route/via/channel"
+            ]
+          },
+          {
+            "code": "composition/label-gap",
+            "severity": "error",
+            "message": "Label \"chunks reordenados\" has only 45px between \"reranker\" and \"evaluar\"; it needs at least 113px to stay beside its route — increase that clear gap or place the connected nodes on another readable row, preserving the label.",
+            "subject": {
+              "diagramType": "architecture",
+              "collection": "connections",
+              "id": "ordenar-contexto",
+              "from": "reranker",
+              "to": "evaluar"
+            },
+            "evidence": {
+              "clearGapPx": 45,
+              "minimumGapPx": 113,
+              "labelWidthPx": 96.39999999999999,
+              "obstacles": [
+                "reranker",
+                "evaluar"
+              ]
+            },
+            "supportedFixes": [
+              "increase the clear gap between the connected nodes to at least 113px",
+              "reposition the connected nodes together while preserving the full relationship label"
+            ]
+          }
+        ],
+        "provenance": "failed",
+        "update": {
+          "status": "unavailable",
+          "installedVersion": null,
+          "availableVersion": null,
+          "releaseNotes": null,
+          "checkedAt": null,
+          "source": null,
+          "noticeRequired": false,
+          "noticeText": null,
+          "reason": "disabled"
+        }
+      },
+      "execution": "embedded-in-deliver"
+    },
+    "deliver": {
+      "status": "not-run",
+      "execution": "blocked-by-validate"
+    }
+  },
+  "diagnostics": [
+    {
+      "code": "composition/label-route-clearance",
+      "severity": "error",
+      "message": "[composition/label-route-clearance] showcase architecture label \"chunks reordenados\" on connections[7] id \"ordenar-contexto\" \"reranker\" -> \"evaluar\" label \"chunks reordenados\" is 0px from connections[6] id \"candidatos-rerank\" \"recuperar\" -> \"reranker\" label \"fragmentos candidatos\" segment 2 [1129, 244] -> [1129, 171] (label rect [1079, 165, 96, 14]; minimum 4px) — adjust labelAt, labelDx, labelDy, or labelSegment; otherwise adjust the other relationship route/via/channel.",
+      "subject": {
+        "diagramType": "architecture",
+        "collection": "connections",
+        "index": 7,
+        "id": "ordenar-contexto",
+        "from": "reranker",
+        "to": "evaluar"
+      },
+      "evidence": {
+        "label": "chunks reordenados",
+        "otherRelationship": {
+          "diagramType": "architecture",
+          "collection": "connections",
+          "index": 6,
+          "id": "candidatos-rerank",
+          "from": "recuperar",
+          "to": "reranker"
+        },
+        "segmentIndex": 2,
+        "clearancePx": 0,
+        "minimumPx": 4,
+        "labelRect": {
+          "relation": {
+            "id": "ordenar-contexto",
+            "from": "reranker",
+            "to": "evaluar",
+            "label": "chunks reordenados"
+          },
+          "relationIndex": 7,
+          "label": "chunks reordenados",
+          "x": 1079.3,
+          "y": 165,
+          "width": 96.39999999999999,
+          "height": 14,
+          "lx": 1127.5,
+          "ly": 175
+        },
+        "from": [
+          1129,
+          244
+        ],
+        "to": [
+          1129,
+          171
+        ]
+      },
+      "supportedFixes": [
+        "adjust labelAt, labelDx, labelDy, or labelSegment; otherwise adjust the other relationship route/via/channel"
+      ]
+    },
+    {
+      "code": "composition/label-route-clearance",
+      "severity": "error",
+      "message": "[composition/label-route-clearance] showcase architecture label \"chunks reordenados\" on connections[7] id \"ordenar-contexto\" \"reranker\" -> \"evaluar\" label \"chunks reordenados\" is 0px from connections[15] id \"answer-al-rag\" \"respuesta\" -> \"rag\" label \"respuesta + citas [n]\" segment 1 [1125, 328] -> [1125, 134] (label rect [1079, 165, 96, 14]; minimum 4px) — adjust labelAt, labelDx, labelDy, or labelSegment; otherwise adjust the other relationship route/via/channel.",
+      "subject": {
+        "diagramType": "architecture",
+        "collection": "connections",
+        "index": 7,
+        "id": "ordenar-contexto",
+        "from": "reranker",
+        "to": "evaluar"
+      },
+      "evidence": {
+        "label": "chunks reordenados",
+        "otherRelationship": {
+          "diagramType": "architecture",
+          "collection": "connections",
+          "index": 15,
+          "id": "answer-al-rag",
+          "from": "respuesta",
+          "to": "rag"
+        },
+        "segmentIndex": 1,
+        "clearancePx": 0,
+        "minimumPx": 4,
+        "labelRect": {
+          "relation": {
+            "id": "ordenar-contexto",
+            "from": "reranker",
+            "to": "evaluar",
+            "label": "chunks reordenados"
+          },
+          "relationIndex": 7,
+          "label": "chunks reordenados",
+          "x": 1079.3,
+          "y": 165,
+          "width": 96.39999999999999,
+          "height": 14,
+          "lx": 1127.5,
+          "ly": 175
+        },
+        "from": [
+          1125,
+          328
+        ],
+        "to": [
+          1125,
+          134
+        ]
+      },
+      "supportedFixes": [
+        "adjust labelAt, labelDx, labelDy, or labelSegment; otherwise adjust the other relationship route/via/channel"
+      ]
+    },
+    {
+      "code": "composition/label-route-clearance",
+      "severity": "error",
+      "message": "[composition/label-route-clearance] showcase architecture label \"sí · generar con citas\" on connections[10] id \"contexto-suficiente\" \"evaluar\" -> \"respuesta\" label \"sí · generar con citas\" is 0px from connections[8] id \"juez-llm\" \"evaluar\" -> \"llm_api\" label \"calificar + proponer\" segment 0 [1209.5, 228] -> [1209.5, 289] (label rect [1199, 244, 116, 14]; minimum 4px) — adjust labelAt, labelDx, labelDy, or labelSegment; otherwise adjust the other relationship route/via/channel.",
+      "subject": {
+        "diagramType": "architecture",
+        "collection": "connections",
+        "index": 10,
+        "id": "contexto-suficiente",
+        "from": "evaluar",
+        "to": "respuesta"
+      },
+      "evidence": {
+        "label": "sí · generar con citas",
+        "otherRelationship": {
+          "diagramType": "architecture",
+          "collection": "connections",
+          "index": 8,
+          "id": "juez-llm",
+          "from": "evaluar",
+          "to": "llm_api"
+        },
+        "segmentIndex": 0,
+        "clearancePx": 0,
+        "minimumPx": 4,
+        "labelRect": {
+          "relation": {
+            "id": "contexto-suficiente",
+            "from": "evaluar",
+            "to": "respuesta",
+            "label": "sí · generar con citas",
+            "variant": "emphasis"
+          },
+          "relationIndex": 10,
+          "label": "sí · generar con citas",
+          "x": 1198.7250000000001,
+          "y": 244,
+          "width": 115.6,
+          "height": 14,
+          "lx": 1256.525,
+          "ly": 254
+        },
+        "from": [
+          1209.5,
+          228
+        ],
+        "to": [
+          1209.5,
+          289
+        ]
+      },
+      "supportedFixes": [
+        "adjust labelAt, labelDx, labelDy, or labelSegment; otherwise adjust the other relationship route/via/channel"
+      ]
+    },
+    {
+      "code": "composition/label-route-clearance",
+      "severity": "error",
+      "message": "[composition/label-route-clearance] showcase architecture label \"sí · generar con citas\" on connections[10] id \"contexto-suficiente\" \"evaluar\" -> \"respuesta\" label \"sí · generar con citas\" is 0px from connections[13] id \"sin-contexto\" \"evaluar\" -> \"fallback\" label \"sin sugerencia o 3 reintentos\" segment 0 [1265.5, 228] -> [1265.5, 297] (label rect [1199, 244, 116, 14]; minimum 4px) — adjust labelAt, labelDx, labelDy, or labelSegment; otherwise adjust the other relationship route/via/channel.",
+      "subject": {
+        "diagramType": "architecture",
+        "collection": "connections",
+        "index": 10,
+        "id": "contexto-suficiente",
+        "from": "evaluar",
+        "to": "respuesta"
+      },
+      "evidence": {
+        "label": "sí · generar con citas",
+        "otherRelationship": {
+          "diagramType": "architecture",
+          "collection": "connections",
+          "index": 13,
+          "id": "sin-contexto",
+          "from": "evaluar",
+          "to": "fallback"
+        },
+        "segmentIndex": 0,
+        "clearancePx": 0,
+        "minimumPx": 4,
+        "labelRect": {
+          "relation": {
+            "id": "contexto-suficiente",
+            "from": "evaluar",
+            "to": "respuesta",
+            "label": "sí · generar con citas",
+            "variant": "emphasis"
+          },
+          "relationIndex": 10,
+          "label": "sí · generar con citas",
+          "x": 1198.7250000000001,
+          "y": 244,
+          "width": 115.6,
+          "height": 14,
+          "lx": 1256.525,
+          "ly": 254
+        },
+        "from": [
+          1265.5,
+          228
+        ],
+        "to": [
+          1265.5,
+          297
+        ]
+      },
+      "supportedFixes": [
+        "adjust labelAt, labelDx, labelDy, or labelSegment; otherwise adjust the other relationship route/via/channel"
+      ]
+    },
+    {
+      "code": "composition/label-gap",
+      "severity": "error",
+      "message": "Label \"chunks reordenados\" has only 45px between \"reranker\" and \"evaluar\"; it needs at least 113px to stay beside its route — increase that clear gap or place the connected nodes on another readable row, preserving the label.",
+      "subject": {
+        "diagramType": "architecture",
+        "collection": "connections",
+        "id": "ordenar-contexto",
+        "from": "reranker",
+        "to": "evaluar"
+      },
+      "evidence": {
+        "clearGapPx": 45,
+        "minimumGapPx": 113,
+        "labelWidthPx": 96.39999999999999,
+        "obstacles": [
+          "reranker",
+          "evaluar"
+        ]
+      },
+      "supportedFixes": [
+        "increase the clear gap between the connected nodes to at least 113px",
+        "reposition the connected nodes together while preserving the full relationship label"
+      ]
+    }
+  ],
+  "evidence": {
+    "receipt": "/Users/grs/Documents/repos/aunar/ia-que-escucha/.archify/architecture-adaptive-rag-20261029-150000/review-2/consulta-rag-adaptativa.finalize.json",
+    "summaryReceipt": "/Users/grs/Documents/repos/aunar/ia-que-escucha/.archify/architecture-adaptive-rag-20261029-150000/review-2/consulta-rag-adaptativa.finalize-summary.json"
+  },
+  "visualReview": "not-requested",
+  "failedStage": "validate",
+  "finishedAt": "2026-10-29T18:21:25.942Z",
+  "durationMs": 308,
+  "update": {
+    "status": "update_available",
+    "installedVersion": "3.1.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": "https://github.com/tt-a1i/archify/releases/tag/v3.2.0",
+    "severity": "normal",
+    "checkedAt": "2026-10-29T18:19:50.017Z",
+    "source": "cache",
+    "noticeRequired": true,
+    "noticeText": "Archify update: 3.1.0 → 3.2.0. A previous check at 2026-10-29T18:19:50.017Z found a newer release. Release notes: https://github.com/tt-a1i/archify/releases/tag/v3.2.0. The installed Skill has not changed; ask to snooze or ignore this reminder.",
+    "eventKey": "archify@sha256:70e210265c59f24dcbdf2a502ff671104b5454e7ee7d3554aecd86bad32384f5"
+  }
+}

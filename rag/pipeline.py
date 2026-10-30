@@ -1,7 +1,7 @@
 """El pipeline completo, de punta a punta.
 
     INGESTA:   audio/video ─► Whisper ─► segmentos ─► chunks ─► embeddings ─► almacén
-    CONSULTA:  pregunta ─► embedding ─► búsqueda top-k ─► prompt ─► LLM ─► respuesta + citas
+    CONSULTA:  pregunta ─► búsqueda ─► reranking ─► evaluación LangGraph ─► respuesta + citas
 
 Uso por línea de comandos:
     python -m rag.pipeline ingest data/videos/conversacion.mp3
@@ -17,17 +17,22 @@ from .chunking import chunk_segments
 from .config import Config, load_config
 from .embeddings import Embedder
 from .llm import LLM, build_messages, strip_thinking
+from .query_graph import build_query_graph
+from .rerank import CrossEncoderReranker
 from .store import get_store
 from .transcribe import load_transcript, transcribe
 
 
 class RAG:
-    def __init__(self, cfg: Config | None = None, embedder=None, store=None, llm=None):
+    def __init__(self, cfg: Config | None = None, embedder=None, store=None, llm=None, reranker=None):
         self.cfg = cfg or load_config()
         # Las dependencias se pueden inyectar (las pruebas usan versiones falsas)
         self.embedder = embedder or Embedder(self.cfg)
         self.store = store or get_store(self.cfg)
         self.llm = llm or LLM(self.cfg)
+        self.reranker = reranker or CrossEncoderReranker(self.cfg.reranker_model)
+        self._query_graph = None
+        self.last_query_info = {}
 
     # ------------------------------------------------------------- ingesta
     def ingest(self, video: Path, force_transcribe: bool = False):
@@ -66,6 +71,23 @@ class RAG:
         for partial in self.llm.stream(build_messages(question, hits)):
             yield strip_thinking(partial)
 
+    def prepare_answer(self, question: str) -> tuple[list[dict], str]:
+        """Ejecuta recuperación adaptativa y respuesta; fallback si se agotan reintentos."""
+        if self._query_graph is None:
+            self._query_graph = build_query_graph(self)
+        state = self._query_graph.invoke({
+            "question": question,
+            "query": question,
+            "hits": [],
+            "retries": 0,
+            "timings": {},
+        })
+        self.last_query_info = {
+            "retries": state.get("retries", 0),
+            "timings": state.get("timings", {}),
+        }
+        return state.get("hits", []), state.get("answer")
+
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="RAG sobre audio y video")
@@ -83,18 +105,28 @@ def main() -> None:
         for msg in rag.ingest(args.source, args.force):
             print(msg)
     else:
-        hits = None if args.no_rag else rag.retrieve(args.question)
+        if args.no_rag:
+            hits = None
+        else:
+            hits, answer = rag.prepare_answer(args.question)
+            if not hits:
+                print(answer)
+                return
         for h in hits or []:
-            print(f"  {h['score']:.3f}  [{h['start']:.0f}s] {h['text'][:90]}…")
-        last = ""
-        for partial in rag.answer(args.question, hits):
-            if not partial.startswith(last):  # el texto cambió (p. ej. se quitó un <think>)
-                last = ""
-                sys.stdout.write("\n")
-            sys.stdout.write(partial[len(last):])
-            sys.stdout.flush()
-            last = partial
-        print()
+            score = h.get("rerank_score", h["score"])
+            print(f"  {score:.3f}  [{h['start']:.0f}s] {h['text'][:90]}…")
+        if args.no_rag:
+            last = ""
+            for partial in rag.answer(args.question, hits):
+                if not partial.startswith(last):
+                    last = ""
+                    sys.stdout.write("\n")
+                sys.stdout.write(partial[len(last):])
+                sys.stdout.flush()
+                last = partial
+            print()
+        else:
+            print(answer)
 
 
 if __name__ == "__main__":

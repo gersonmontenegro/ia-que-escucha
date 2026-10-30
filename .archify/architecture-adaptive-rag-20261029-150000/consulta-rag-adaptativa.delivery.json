@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "40706f18-feb7-4344-8d76-976f745c9d3d",
+  "status": "current",
+  "command": "deliver",
+  "type": "architecture",
+  "input": "/Users/grs/Documents/repos/aunar/ia-que-escucha/.archify/architecture-adaptive-rag-20261029-150000/candidate.json",
+  "output": "/Users/grs/Documents/repos/aunar/ia-que-escucha/.archify/architecture-adaptive-rag-20261029-150000/consulta-rag-adaptativa.html",
+  "specification": {
+    "sha256": "07789a1ce55ef07b8f30e55ae65363adcbb79dfbe862952ce080700d22327321",
+    "bytes": 5444
+  },
+  "artifact": {
+    "sha256": "987bdd8e5d255bc3221add5ccf779f72cf27caa471e9f2b331aa1c25f43ffa2e",
+    "bytes": 842407
+  }
+}

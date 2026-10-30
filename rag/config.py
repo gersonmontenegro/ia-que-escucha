@@ -51,6 +51,10 @@ class Config:
     qdrant_api_key: str = field(default_factory=lambda: _env("QDRANT_API_KEY", ""))
     top_k: int = field(default_factory=lambda: int(_env("TOP_K", "4")))
 
+    # --- Reranking local ---
+    reranker_model: str = field(default_factory=lambda: _env("RERANKER_MODEL", "cross-encoder/mmarco-mMiniLMv2-L12-H384-v1"))
+    max_query_retries: int = field(default_factory=lambda: int(_env("MAX_QUERY_RETRIES", "3")))
+
     # --- LLM (cualquier API compatible con OpenAI; Ollama incluido) ---
     llm_base_url: str = field(default_factory=lambda: _env("LLM_BASE_URL", "http://localhost:11434/v1"))
     llm_api_key: str = field(default_factory=lambda: _env("LLM_API_KEY", "ollama"))
