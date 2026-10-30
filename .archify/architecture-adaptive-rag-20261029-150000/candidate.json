@@ -1,0 +1,157 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Consulta RAG adaptativa",
+    "locale": "es",
+    "output": ".archify/architecture-adaptive-rag-20261029-150000/consulta-rag-adaptativa.html",
+    "quality_profile": "showcase"
+  },
+  "components": [
+    {
+      "id": "persona",
+      "type": "external",
+      "label": "Persona",
+      "sublabel": "Pregunta en español",
+      "icon": "person",
+      "pos": [30, 280],
+      "size": [115, 65]
+    },
+    {
+      "id": "gradio",
+      "type": "frontend",
+      "label": "Gradio",
+      "sublabel": "Progreso, respuesta y citas",
+      "pos": [190, 280],
+      "size": [140, 65]
+    },
+    {
+      "id": "rag",
+      "type": "backend",
+      "label": "RAG",
+      "sublabel": "Coordina el pipeline",
+      "pos": [380, 280],
+      "size": [145, 65]
+    },
+    {
+      "id": "langgraph",
+      "type": "backend",
+      "label": "LangGraph",
+      "sublabel": "StateGraph · estado y rutas",
+      "pos": [580, 280],
+      "size": [155, 65]
+    },
+    {
+      "id": "recuperar",
+      "type": "backend",
+      "label": "Recuperar top-k",
+      "sublabel": "Embedding + búsqueda vectorial",
+      "pos": [780, 135],
+      "size": [145, 70]
+    },
+    {
+      "id": "vector_store",
+      "type": "database",
+      "label": "Almacén vectorial",
+      "sublabel": "Qdrant o NumPy",
+      "pos": [580, 450],
+      "size": [145, 65]
+    },
+    {
+      "id": "reranker",
+      "type": "backend",
+      "label": "Cross-encoder",
+      "sublabel": "Reordena por relevancia",
+      "tag": "local · multilingüe",
+      "pos": [1060, 135],
+      "size": [145, 70]
+    },
+    {
+      "id": "evaluar",
+      "type": "backend",
+      "label": "Evaluar contexto",
+      "sublabel": "Decide suficiencia y propone consulta",
+      "pos": [1060, 300],
+      "size": [175, 78]
+    },
+    {
+      "id": "consulta_reescrita",
+      "type": "backend",
+      "label": "Reescribir consulta",
+      "sublabel": "Copia sugerencia · incrementa reintento",
+      "pos": [780, 520],
+      "size": [165, 70]
+    },
+    {
+      "id": "respuesta",
+      "type": "backend",
+      "label": "Generar respuesta",
+      "sublabel": "Solo con contexto · cita fragmentos",
+      "pos": [1270, 235],
+      "size": [165, 70]
+    },
+    {
+      "id": "fallback",
+      "type": "backend",
+      "label": "Fallback fijo",
+      "sublabel": "«Eso no se dice en el video.»",
+      "pos": [1270, 430],
+      "size": [165, 65]
+    },
+    {
+      "id": "llm_api",
+      "type": "external",
+      "label": "LLM API",
+      "sublabel": "OpenAI-compatible · Ollama por defecto",
+      "pos": [790, 650],
+      "size": [185, 70]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "Nodos del flujo de consulta LangGraph",
+      "wraps": ["recuperar", "reranker", "evaluar", "consulta_reescrita", "respuesta", "fallback"],
+      "pad": 18
+    }
+  ],
+  "connections": [
+    {"id": "pregunta", "from": "persona", "to": "gradio", "label": "pregunta", "variant": "emphasis"},
+    {"id": "llamar-rag", "from": "gradio", "to": "rag", "label": "prepare_answer()"},
+    {"id": "ejecutar-grafo", "from": "rag", "to": "langgraph", "label": "invoke · estado inicial"},
+    {"id": "iniciar-recuperacion", "from": "langgraph", "to": "recuperar", "label": "consulta actual"},
+    {"id": "buscar-vector", "from": "recuperar", "to": "vector_store", "label": "top-k"},
+    {"id": "devolver-candidatos", "from": "vector_store", "to": "recuperar", "label": "chunks + tiempos"},
+    {"id": "candidatos-rerank", "from": "recuperar", "to": "reranker", "label": "fragmentos candidatos"},
+    {"id": "ordenar-contexto", "from": "reranker", "to": "evaluar", "label": "chunks reordenados"},
+    {"id": "juez-llm", "from": "evaluar", "to": "llm_api", "label": "calificar + proponer"},
+    {"id": "salida-juez", "from": "llm_api", "to": "evaluar", "label": "JSON de decisión"},
+    {"id": "contexto-suficiente", "from": "evaluar", "to": "respuesta", "label": "sí · generar con citas", "variant": "emphasis"},
+    {"id": "contexto-insuficiente", "from": "evaluar", "to": "consulta_reescrita", "label": "no · nueva consulta"},
+    {"id": "reintentar", "from": "consulta_reescrita", "to": "recuperar", "label": "reintento < 3"},
+    {"id": "sin-contexto", "from": "evaluar", "to": "fallback", "label": "sin sugerencia o 3 reintentos", "variant": "security"},
+    {"id": "generar-con-llm", "from": "respuesta", "to": "llm_api", "label": "pregunta + contexto"},
+    {"id": "answer-al-rag", "from": "respuesta", "to": "rag", "label": "respuesta + citas [n]", "variant": "emphasis"},
+    {"id": "fallback-al-rag", "from": "fallback", "to": "rag", "label": "respuesta fija"},
+    {"id": "rag-a-gradio", "from": "rag", "to": "gradio", "label": "resultado del grafo"}
+  ],
+  "cards": [
+    {
+      "dot": "amber",
+      "title": "Reintentos",
+      "items": [
+        "Máximo 3 reintentos después de la búsqueda inicial (hasta 4 búsquedas).",
+        "El juez propone la consulta corregida en la misma llamada que evalúa el contexto.",
+        "La consulta original se conserva para formular la respuesta final."
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "Tiempos visibles en la app",
+      "items": [
+        "La interfaz muestra una señal de progreso antes de ejecutar el grafo.",
+        "Al terminar, informa tiempos acumulados de reranking, evaluación y generación."
+      ]
+    }
+  ]
+}

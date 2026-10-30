@@ -13,6 +13,8 @@ from rag.chunking import chunk_segments
 from rag.config import Config
 from rag.llm import build_messages, cited_numbers, strip_thinking
 from rag.pipeline import RAG
+from rag.query_graph import FALLBACK_ANSWER, _context_grade_messages, _parse_grade
+from rag.rerank import CrossEncoderReranker
 from rag.store import NumpyStore, QdrantStore
 from rag.transcribe import format_ts
 
@@ -46,6 +48,32 @@ class FakeLLM:
         yield "<think>pensando…</think>La tortuga"
         yield "<think>pensando…</think>La tortuga vive mucho [2][1]."
 
+    def complete(self, messages, temperature=None):
+        if "Evalúa si el contexto" in messages[0]["content"]:
+            return '{"usable": true}'
+        return "El telescopio detectó agua [1]."
+
+
+class FakeReranker:
+    def rerank(self, question, hits):
+        return hits
+
+
+class FakeCrossEncoder:
+    def predict(self, pairs):
+        return [0.1, 0.9]
+
+
+class ScriptedGraphLLM(FakeLLM):
+    def __init__(self, verdicts):
+        self.verdicts = iter(verdicts)
+
+    def complete(self, messages, temperature=None):
+        content = messages[0]["content"]
+        if "Evalúa si el contexto" in content:
+            return next(self.verdicts)
+        return "pregunta reformulada"
+
 
 @pytest.fixture
 def cfg(tmp_path):
@@ -78,7 +106,7 @@ def test_ingesta_y_busqueda(cfg, store_cls, source_name):
     cfg.vector_store = store_cls
     cfg.qdrant_url = ":memory:"
     store = NumpyStore(cfg) if store_cls == "numpy" else QdrantStore(cfg)
-    rag = RAG(cfg, embedder=FakeEmbedder(), store=store, llm=FakeLLM())
+    rag = RAG(cfg, embedder=FakeEmbedder(), store=store, llm=FakeLLM(), reranker=FakeReranker())
 
     video = cfg.videos_dir / source_name
     (cfg.transcripts_dir / f"{video.stem}.json").write_text(
@@ -101,6 +129,59 @@ def test_ingesta_y_busqueda(cfg, store_cls, source_name):
     final = list(rag.answer("¿Cuántos años vive la tortuga?", hits))[-1]
     assert final == "La tortuga vive mucho [2][1]."
     assert cited_numbers(final) == [2, 1]
+
+
+def test_grafo_acepta_contexto_y_devuelve_hits(cfg):
+    cfg.vector_store = "numpy"
+    store = NumpyStore(cfg)
+    rag = RAG(cfg, embedder=FakeEmbedder(), store=store, llm=FakeLLM(), reranker=FakeReranker())
+    store.add("noticia.mp4", [{"id": 0, "start": 5, "end": 11, "text": SEGMENTS[1]["text"]}], FakeEmbedder().embed([SEGMENTS[1]["text"]]))
+
+    hits, answer = rag.prepare_answer("¿Qué detectó el telescopio?")
+
+    assert answer == "El telescopio detectó agua [1]."
+    assert hits[0]["start"] == 5
+
+
+def test_grafo_agota_tres_reintentos_y_usa_fallback(cfg):
+    cfg.vector_store = "numpy"
+    store = NumpyStore(cfg)
+    store.add("noticia.mp4", [{"id": 0, "start": 5, "end": 11, "text": SEGMENTS[1]["text"]}], FakeEmbedder().embed([SEGMENTS[1]["text"]]))
+    llm = ScriptedGraphLLM([
+        '{"usable": false, "rewritten_query": "consulta reformulada 1"}',
+        '{"usable": false, "rewritten_query": "consulta reformulada 2"}',
+        '{"usable": false, "rewritten_query": "consulta reformulada 3"}',
+        '{"usable": false, "rewritten_query": "consulta reformulada 4"}',
+    ])
+    rag = RAG(cfg, embedder=FakeEmbedder(), store=store, llm=llm, reranker=FakeReranker())
+
+    hits, fallback = rag.prepare_answer("¿Quién ganó?")
+
+    assert hits == []
+    assert fallback == FALLBACK_ANSWER
+
+
+def test_cross_encoder_reordena_y_conserva_puntajes():
+    reranker = CrossEncoderReranker("no-se-descarga-en-pruebas")
+    reranker._model = FakeCrossEncoder()
+    hits = [
+        {"text": "poco relevante", "score": 0.8},
+        {"text": "muy relevante", "score": 0.4},
+    ]
+
+    ranked = reranker.rerank("pregunta", hits)
+
+    assert ranked[0]["text"] == "muy relevante"
+    assert ranked[0]["rerank_score"] == 0.9
+    assert ranked[0]["score"] == 0.4
+
+
+def test_juez_contexto_devuelve_reformulacion_y_corrige_errata():
+    messages = _context_grade_messages("qué ha pasado en jupite?", "qué ha pasado en jupite?", [])
+    parsed = _parse_grade('{"usable": false, "rewritten_query": "¿Qué pasó en Júpiter?"}')
+
+    assert "jupite" in messages[0]["content"]
+    assert parsed == {"usable": False, "rewritten_query": "¿Qué pasó en Júpiter?"}
 
 
 def test_numpy_persiste(cfg):

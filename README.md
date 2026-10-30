@@ -16,9 +16,12 @@ flowchart LR
     subgraph Consulta
         Q[❓ Pregunta] --> E2[Embedding]
         E2 --> DB
-        DB -->|top-k fragmentos| P[Prompt<br/>con contexto]
-        P --> L[LLM<br/>Qwen 3.8]
+        DB -->|top-k| X[Cross-encoder local<br/>reranking]
+        X --> G[LLM evalúa contexto<br/>LangGraph]
+        G -->|suficiente| L[LLM<br/>Qwen 3.8]
+        G -->|insuficiente, hasta 3 reintentos| Q
         L --> R[💬 Respuesta<br/>+ minuto citado]
+        G -->|sin contexto| F[Respuesta fija<br/>sin inventar]
     end
 ```
 
@@ -30,6 +33,8 @@ flowchart LR
 | Embeddings | `bge-m3` vía Ollama | `text-embedding-3-small` | Ollama nativo |
 | Base vectorial | Qdrant | Qdrant Cloud · o NumPy (a mano) | Docker |
 | LLM | `qwen3.8:27b` vía Ollama | OpenRouter, OpenAI… | Ollama nativo |
+| Reranker | `cross-encoder/mmarco-mMiniLMv2-L12-H384-v1` (multilingüe, compacto) | Configurable por `RERANKER_MODEL` | Docker (CPU, caché Hugging Face) |
+| Orquestación | LangGraph: evaluación y hasta 3 reintentos | — | Docker |
 | Interfaz | Gradio | — | Docker |
 
 **¿Por qué Ollama no está en Docker?** En macOS, Docker no tiene acceso a la GPU
@@ -88,6 +93,18 @@ modelo usa su propia colección.
 hace Qdrant, solo que Qdrant usa un índice (HNSW) para no comparar contra todos
 los vectores, filtra por metadatos y escala a millones de chunks.
 
+### Flujo de consulta adaptativo
+
+La búsqueda vectorial obtiene `TOP_K` candidatos y un cross-encoder local los
+reordena comparando pregunta y fragmento conjuntamente. LangGraph pide al LLM
+evaluar si el contexto basta para responder; si no, devuelve en la misma llamada
+una consulta reformulada, corrigiendo posibles errores de escritura, y vuelve a
+buscar hasta `MAX_QUERY_RETRIES` veces (3 por defecto, cuatro búsquedas
+como máximo contando la inicial). Si sigue sin evidencia, responde
+**«Eso no se dice en el video.»**. Modelo y límite se pueden cambiar con
+`RERANKER_MODEL` y `MAX_QUERY_RETRIES` en `.env`. El modelo se descarga al primer
+uso y queda en la caché persistente de Hugging Face de Docker.
+
 ## Mapa del código
 
 | Archivo | Etapa |
@@ -96,7 +113,9 @@ los vectores, filtra por metadatos y escala a millones de chunks.
 | `rag/chunking.py` | 2 · Segmentos → chunks |
 | `rag/embeddings.py` | 3 · Texto → vectores |
 | `rag/store.py` | 4 · Guardar y buscar vectores (NumPy y Qdrant) |
-| `rag/llm.py` | 5 · Prompt con contexto → respuesta con citas |
+| `rag/rerank.py` | 5 · Reordenar candidatos con cross-encoder local |
+| `rag/query_graph.py` | 6 · Evaluar contexto y controlar reintentos (LangGraph) |
+| `rag/llm.py` | 7 · Prompt con contexto → respuesta con citas |
 | `rag/pipeline.py` | Todo junto (también como CLI) |
 | `app.py` | Interfaz Gradio |
 | `docs/retos.md` | Ejercicios con solución |

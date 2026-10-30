@@ -51,7 +51,7 @@ def player_html(video: str | None, start: float = 0, autoplay: bool = False) -> 
 
 
 def hits_table(hits: list[dict]) -> list[list]:
-    return [[n, round(h["score"], 3), f"{format_ts(h['start'])}–{format_ts(h['end'])}", h["text"]]
+    return [[n, round(h.get("rerank_score", h["score"]), 3), f"{format_ts(h['start'])}–{format_ts(h['end'])}", h["text"]]
             for n, h in enumerate(hits, start=1)]
 
 
@@ -101,23 +101,23 @@ def do_ask(question: str, compare: bool):
         yield "", "", [], [], empty_radio, gr.skip(), ""
         return
 
+    yield "⏳ Buscando fragmentos, evaluando contexto y preparando la respuesta…", "", [], [], empty_radio, gr.skip(), "El grafo puede corregir la consulta y reintentar hasta 3 veces."
     retrieval_start = time.perf_counter()
-    hits = rag.retrieve(question)
+    hits, answer = rag.prepare_answer(question)
     retrieval_seconds = time.perf_counter() - retrieval_start
-    retrieval_status = f"⏱️ Recuperación: {retrieval_seconds:.3f} s · {len(hits)} fragmentos"
+    query_info = rag.last_query_info
+    timings = query_info.get("timings", {})
+    retrieval_status = (
+        f"⏱️ Flujo LangGraph: {retrieval_seconds:.1f} s · {len(hits)} fragmentos · "
+        f"{query_info.get('retries', 0)} reintentos · "
+        f"reranking {timings.get('rerank_seconds', 0):.1f} s · "
+        f"evaluación {timings.get('context_evaluation_seconds', 0):.1f} s · "
+        f"respuesta {timings.get('generation_seconds', 0):.1f} s"
+    )
     if not hits:
-        yield "⚠️ No hay nada indexado todavía. Ve a la pestaña de ingesta.", "", [], [], empty_radio, gr.skip(), retrieval_status
+        yield answer, "", [], [], empty_radio, gr.skip(), retrieval_status
         return
-
-    # 1) Lo recuperado aparece primero: es el momento clave para entender el RAG
-    yield "⏳ Generando…", "", hits_table(hits), hits, empty_radio, gr.skip(), retrieval_status
-
-    answer = ""
-    generation_start = time.perf_counter()
-    for answer in rag.answer(question, hits):
-        yield answer, "", hits_table(hits), hits, empty_radio, gr.skip(), retrieval_status
-    answer_seconds = time.perf_counter() - generation_start
-    answer_display = f"{answer}\n\n{generation_note(answer_seconds, rag.llm)}"
+    answer_display = f"{answer}\n\n*⏱️ Flujo completo: {retrieval_seconds:.1f} s*"
 
     choices = citation_choices(hits, answer)
     first = hits[choices[0][1] - 1]
@@ -197,7 +197,7 @@ with gr.Blocks(title="¿Cómo enseñarle a una IA a escuchar?") as demo:
                 player = gr.HTML(player_html(None), js_on_load=None)
                 cites = gr.Radio(choices=[], label="Ir al minuto citado")
         retrieval_time = gr.Markdown()
-        retrieved = gr.Dataframe(headers=["#", "Similitud", "Minuto", "Fragmento recuperado"],
+        retrieved = gr.Dataframe(headers=["#", "Puntaje reranker", "Minuto", "Fragmento recuperado"],
                                  label="Fragmentos recuperados (lo que realmente ve el LLM)", wrap=True,
                                  interactive=False, column_widths=["40px", "90px", "110px", "auto"])
 

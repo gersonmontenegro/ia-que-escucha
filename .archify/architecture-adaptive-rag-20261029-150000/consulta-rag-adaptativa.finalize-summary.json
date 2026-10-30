@@ -1,0 +1,301 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "architecture",
+  "quality": "showcase",
+  "specification": {
+    "path": "/Users/grs/Documents/repos/aunar/ia-que-escucha/.archify/architecture-adaptive-rag-20261029-150000/candidate.json",
+    "sha256": "07789a1ce55ef07b8f30e55ae65363adcbb79dfbe862952ce080700d22327321",
+    "bytes": 5444
+  },
+  "artifact": {
+    "path": "/Users/grs/Documents/repos/aunar/ia-que-escucha/.archify/architecture-adaptive-rag-20261029-150000/consulta-rag-adaptativa.html",
+    "sha256": "987bdd8e5d255bc3221add5ccf779f72cf27caa471e9f2b331aa1c25f43ffa2e",
+    "bytes": 842407
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/Users/grs/Documents/repos/aunar/ia-que-escucha/.archify/architecture-adaptive-rag-20261029-150000/consulta-rag-adaptativa.finalize.json",
+    "summaryReceipt": "/Users/grs/Documents/repos/aunar/ia-que-escucha/.archify/architecture-adaptive-rag-20261029-150000/consulta-rag-adaptativa.finalize-summary.json",
+    "browserCheckReceipt": "/Users/grs/Documents/repos/aunar/ia-que-escucha/.archify/architecture-adaptive-rag-20261029-150000/consulta-rag-adaptativa.browser-check.json"
+  },
+  "update": {
+    "status": "update_available",
+    "installedVersion": "3.1.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": "https://github.com/tt-a1i/archify/releases/tag/v3.2.0",
+    "severity": "normal",
+    "checkedAt": "2026-10-29T18:19:50.017Z",
+    "source": "cache",
+    "noticeRequired": true,
+    "noticeText": "Archify update: 3.1.0 → 3.2.0. A previous check at 2026-10-29T18:19:50.017Z found a newer release. Release notes: https://github.com/tt-a1i/archify/releases/tag/v3.2.0. The installed Skill has not changed; ask to snooze or ignore this reminder.",
+    "eventKey": "archify@sha256:70e210265c59f24dcbdf2a502ff671104b5454e7ee7d3554aecd86bad32384f5"
+  },
+  "visualReview": "not-requested",
+  "durationMs": 2518,
+  "visualReviewRecommendation": {
+    "action": "inspect-route-readability",
+    "signals": {
+      "resolvedCrossovers": 17,
+      "routesOverSuggestedBends": 4
+    },
+    "reason": "Automated gates passed, but crossings or detours still need perceptual review before claiming visual quality.",
+    "affectedRoutes": {
+      "crossings": [
+        {
+          "left": {
+            "id": "ejecutar-grafo",
+            "from": "rag",
+            "to": "langgraph",
+            "label": "invoke · estado inicial",
+            "collectionIndex": 2,
+            "artifactIndex": 3
+          },
+          "right": {
+            "id": "answer-al-rag",
+            "from": "respuesta",
+            "to": "rag",
+            "label": "respuesta + citas [n]",
+            "collectionIndex": 15,
+            "artifactIndex": 16
+          },
+          "point": [
+            549,
+            256.06666666666666
+          ],
+          "sharedNode": "rag"
+        },
+        {
+          "left": {
+            "id": "iniciar-recuperacion",
+            "from": "langgraph",
+            "to": "recuperar",
+            "label": "consulta actual",
+            "collectionIndex": 3,
+            "artifactIndex": 4
+          },
+          "right": {
+            "id": "buscar-vector",
+            "from": "recuperar",
+            "to": "vector_store",
+            "label": "top-k",
+            "collectionIndex": 4,
+            "artifactIndex": 5
+          },
+          "point": [
+            752.5,
+            170
+          ],
+          "sharedNode": "recuperar"
+        },
+        {
+          "left": {
+            "id": "iniciar-recuperacion",
+            "from": "langgraph",
+            "to": "recuperar",
+            "label": "consulta actual",
+            "collectionIndex": 3,
+            "artifactIndex": 4
+          },
+          "right": {
+            "id": "answer-al-rag",
+            "from": "respuesta",
+            "to": "rag",
+            "label": "respuesta + citas [n]",
+            "collectionIndex": 15,
+            "artifactIndex": 16
+          },
+          "point": [
+            719,
+            229.25
+          ]
+        },
+        {
+          "left": {
+            "id": "buscar-vector",
+            "from": "recuperar",
+            "to": "vector_store",
+            "label": "top-k",
+            "collectionIndex": 4,
+            "artifactIndex": 5
+          },
+          "right": {
+            "id": "answer-al-rag",
+            "from": "respuesta",
+            "to": "rag",
+            "label": "respuesta + citas [n]",
+            "collectionIndex": 15,
+            "artifactIndex": 16
+          },
+          "point": [
+            752.5,
+            229.25
+          ]
+        },
+        {
+          "left": {
+            "id": "buscar-vector",
+            "from": "recuperar",
+            "to": "vector_store",
+            "label": "top-k",
+            "collectionIndex": 4,
+            "artifactIndex": 5
+          },
+          "right": {
+            "id": "fallback-al-rag",
+            "from": "fallback",
+            "to": "rag",
+            "label": "respuesta fija",
+            "collectionIndex": 16,
+            "artifactIndex": 17
+          },
+          "point": [
+            752.5,
+            417
+          ]
+        },
+        {
+          "left": {
+            "id": "devolver-candidatos",
+            "from": "vector_store",
+            "to": "recuperar",
+            "label": "chunks + tiempos",
+            "collectionIndex": 5,
+            "artifactIndex": 6
+          },
+          "right": {
+            "id": "answer-al-rag",
+            "from": "respuesta",
+            "to": "rag",
+            "label": "respuesta + citas [n]",
+            "collectionIndex": 15,
+            "artifactIndex": 16
+          },
+          "point": [
+            756,
+            229.25
+          ]
+        },
+        {
+          "left": {
+            "id": "devolver-candidatos",
+            "from": "vector_store",
+            "to": "recuperar",
+            "label": "chunks + tiempos",
+            "collectionIndex": 5,
+            "artifactIndex": 6
+          },
+          "right": {
+            "id": "fallback-al-rag",
+            "from": "fallback",
+            "to": "rag",
+            "label": "respuesta fija",
+            "collectionIndex": 16,
+            "artifactIndex": 17
+          },
+          "point": [
+            756,
+            417
+          ]
+        },
+        {
+          "left": {
+            "id": "ordenar-contexto",
+            "from": "reranker",
+            "to": "evaluar",
+            "label": "chunks reordenados",
+            "collectionIndex": 7,
+            "artifactIndex": 8
+          },
+          "right": {
+            "id": "generar-con-llm",
+            "from": "respuesta",
+            "to": "llm_api",
+            "label": "pregunta + contexto",
+            "collectionIndex": 14,
+            "artifactIndex": 15
+          },
+          "point": [
+            1132.5000000000002,
+            284.00000000000006
+          ]
+        }
+      ],
+      "detours": [
+        {
+          "relationship": {
+            "id": "ejecutar-grafo",
+            "from": "rag",
+            "to": "langgraph",
+            "label": "invoke · estado inicial",
+            "collectionIndex": 2,
+            "artifactIndex": 3
+          },
+          "bends": 3,
+          "stretch": 1.329
+        },
+        {
+          "relationship": {
+            "id": "devolver-candidatos",
+            "from": "vector_store",
+            "to": "recuperar",
+            "label": "chunks + tiempos",
+            "collectionIndex": 5,
+            "artifactIndex": 6
+          },
+          "bends": 3,
+          "stretch": 1.105
+        },
+        {
+          "relationship": {
+            "id": "answer-al-rag",
+            "from": "respuesta",
+            "to": "rag",
+            "label": "respuesta + citas [n]",
+            "collectionIndex": 15,
+            "artifactIndex": 16
+          },
+          "bends": 4,
+          "stretch": 1.068
+        },
+        {
+          "relationship": {
+            "id": "fallback-al-rag",
+            "from": "fallback",
+            "to": "rag",
+            "label": "respuesta fija",
+            "collectionIndex": 16,
+            "artifactIndex": 17
+          },
+          "bends": 4,
+          "stretch": 1
+        }
+      ],
+      "truncated": true
+    },
+    "hints": [
+      "rag → langgraph and respuesta → rag cross next to rag: move node langgraph or respuesta so the two reach rag from different sides (for example one level with it, one directly above or below it).",
+      "langgraph → recuperar and recuperar → vector_store cross next to recuperar: move node langgraph or vector_store so the two reach recuperar from different sides (for example one level with it, one directly above or below it).",
+      "langgraph → recuperar crosses respuesta → rag: move the node of whichever is a branch, return, or second entrance to the other side of the main path, so that relationship runs through an empty corridor.",
+      "recuperar → vector_store crosses respuesta → rag: move the node of whichever is a branch, return, or second entrance to the other side of the main path, so that relationship runs through an empty corridor.",
+      "recuperar → vector_store crosses fallback → rag: move the node of whichever is a branch, return, or second entrance to the other side of the main path, so that relationship runs through an empty corridor.",
+      "vector_store → recuperar crosses respuesta → rag: move the node of whichever is a branch, return, or second entrance to the other side of the main path, so that relationship runs through an empty corridor.",
+      "vector_store → recuperar crosses fallback → rag: move the node of whichever is a branch, return, or second entrance to the other side of the main path, so that relationship runs through an empty corridor.",
+      "reranker → evaluar crosses respuesta → llm_api: move the node of whichever is a branch, return, or second entrance to the other side of the main path, so that relationship runs through an empty corridor."
+    ],
+    "repair": "Trace these relationships at the desktop viewport. For Architecture, use references/architecture-layout-repair.md: reflow a blocked main path or tangled connected scene, and repair an isolated defect locally only when the surrounding composition is accepted. Preserve all semantic content and user-fixed geometry. Rerun finalize once after the edit."
+  }
+}

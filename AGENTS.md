@@ -29,10 +29,12 @@ que salta a él.
 
 ## Decisiones de diseño (respetarlas)
 
-1. **Código propio y simple, sin LangChain/LlamaIndex.** El objetivo es didáctico:
+1. **Código propio y simple, sin LangChain/LlamaIndex.** LangGraph se usa solo
+   para orquestar el flujo adaptativo de consulta; las etapas y sus prompts siguen
+   siendo código propio y legible. El objetivo es didáctico:
    cada etapa debe poder leerse en pantalla. Preferir funciones cortas y legibles
    a abstracciones. Solo se usan librerías para lo que no es el tema (Whisper,
-   cliente OpenAI, cliente Qdrant, Gradio).
+   cliente OpenAI, cliente Qdrant, Gradio, cross-encoder y LangGraph).
 2. **Todo proveedor es intercambiable por `.env`** usando APIs compatibles con
    OpenAI (`base_url` + `api_key` + `model`). Por defecto, todo local.
 3. **Dos almacenes con la misma interfaz:** `NumpyStore` (búsqueda a mano, para
@@ -56,6 +58,8 @@ rag/chunking.py     etapa 2: segmentos -> chunks con tiempos
 rag/embeddings.py   etapa 3: texto -> vectores (API OpenAI-compatible)
 rag/store.py        etapa 4: NumpyStore y QdrantStore
 rag/llm.py          etapa 5: prompt con contexto, streaming, citas [n]
+rag/rerank.py       etapa 6: reranking local con cross-encoder
+rag/query_graph.py  etapa 7: evaluación de contexto y reintentos (LangGraph)
 rag/pipeline.py     clase RAG (ingest / retrieve / answer) + CLI
 app.py              Gradio: pestaña Ingesta y pestaña Preguntar
 docs/retos.md       7 retos con soluciones (probadas con fakes)

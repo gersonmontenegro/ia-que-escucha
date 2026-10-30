@@ -1,6 +1,10 @@
 gradio==6.30.0
 openai==3.28.0
 qdrant-client==1.19.1
+langgraph>=1.0,<2
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch==2.8.0+cpu
+sentence-transformers>=5.1,<6
 faster-whisper==1.2.1
 # faster-whisper 1.2.1 usa av.open(metadata_errors=...), retirado en PyAV 19.
 av<19
